@@ -11,5 +11,7 @@ class Ranking extends Model
 
     public $table = "ranking";
 
-    
+    protected $fillable = [
+        'ranking_name'
+    ];
 }
