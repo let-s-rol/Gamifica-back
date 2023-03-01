@@ -7,13 +7,23 @@ use App\Models\Ranking_User;
 use App\Models\Ranking;
 use App\Models\User;
 
+
+
 class Ranking_UserController extends Controller
 {
+
+    /* FUNCIÓN INSERT: El proposito de esta función es insertar un Usuario en un Ranking.
+       Para ello primero comprueba si quien quiere insertar el alumno es un profesor, después
+       define las propiedades del Ranking_User con los datos recibidos del User que se quiere insertar.
+       Por último comprueba si se han guardado estos cambios y te lanza varios mensajes para ver
+       si la operación ha sido exitosa, si ha fallado, y algunos de los motivos de fallo.*/
+
     public function insert(Request $request, $id_alumno)
     {
         $user = $request->user();
-
+        /*TODO: Comprobar si se puede entrar en este IF (yo creo que sí) */
         if (isset($user->rol) && $user->rol == "profesor") {
+           
             $alumno = User::find($id_alumno);
 
             if ($alumno) {
@@ -34,12 +44,17 @@ class Ranking_UserController extends Controller
             return response()->json(['success' => false, 'message' => 'No tienes permiso para realizar esta acción']);
         }
     }
+
+
+    /* FUNCIÓN KICKOFF: Está función sirve para eliminar a un alumno de un ranking. Para ello
+       comprobará si el Usuario intentándolo es un profesor, después rellena el objeto Student
+       con los datos del alumno...*/
     public function kickoff(Request $request, $id_alumno)
     {
         $user = $request->user();
 
         if (isset($user->rol) && $user->rol == "profesor") {
-            $student = Ranking_User::where('id_ranking', $id_alumno)->first();
+            $student = Ranking_User::where('id_user', $id_alumno)->first();
 
             if ($student) {
                 $student->delete();
@@ -52,6 +67,7 @@ class Ranking_UserController extends Controller
         }
     }
 
+    /* */
     public function update_points(Request $request, $id_alumno)
     {
         $user = $request->user();
@@ -76,6 +92,7 @@ class Ranking_UserController extends Controller
         }
     }
 
+    /* */
     public function show_students(Request $request)
     {
         $students = User::where('rol', 'student')->orderBy('points', 'desc')->get();
