@@ -10,7 +10,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('ranking', function (Blueprint $table) {
-            $table->id('ranking_id');
+            $table->id('id_ranking');
             $table->string('ranking_name'); 
             $table->string('owner'); 
             

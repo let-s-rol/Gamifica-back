@@ -44,6 +44,8 @@ class RankingController extends Controller
         }
         
     }
+    //@TODO mirar si es necesario hacer un control de acceso para que solo el creador del
+    //ranking pueda borrar el ranking en cuestión.
     public function delete(Request $request, $ranking_id)
     {
         $user = $request->user();

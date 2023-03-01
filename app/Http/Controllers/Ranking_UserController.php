@@ -18,7 +18,8 @@ class Ranking_UserController extends Controller
 
             if ($alumno) {
                 $ranking_user = new Ranking_User();
-                $ranking_user->user = $alumno->name;
+                $ranking_user->id_user = $alumno->id;
+                $ranking_user->user_name = $alumno->nick;
                 $ranking_user->points = 0;
 
                 if ($ranking_user->save()) {
@@ -33,12 +34,12 @@ class Ranking_UserController extends Controller
             return response()->json(['success' => false, 'message' => 'No tienes permiso para realizar esta acción']);
         }
     }
-    public function kickoff(Request $request, $name)
+    public function kickoff(Request $request, $id_alumno)
     {
         $user = $request->user();
 
         if (isset($user->rol) && $user->rol == "profesor") {
-            $student = Ranking_User::where('user', $name)->first();
+            $student = Ranking_User::where('id_ranking', $id_alumno)->first();
 
             if ($student) {
                 $student->delete();
@@ -51,23 +52,23 @@ class Ranking_UserController extends Controller
         }
     }
 
-    public function update_points(Request $request, $name)
+    public function update_points(Request $request, $id_alumno)
     {
         $user = $request->user();
 
         if (isset($user->rol) == "profesor") {
 
-            $student = Ranking_User::where('user', $name)->first();
+            $student = Ranking_User::where('id_user', $id_alumno)->first();
 
             if ($student) {
 
                 $student->points = $request->points;
                 $student->save();
 
-                return response()->json(['message' => 'Los puntos del estudiante ' . $name . ' han sido actualizados'], 200);
+                return response()->json(['message' => 'Los puntos del estudiante ' . $student->user_name . ' han sido actualizados'], 200);
             } else {
 
-                return response()->json(['message' => 'El estudiante ' . $name . ' no ha sido encontrado'], 404);
+                return response()->json(['message' => 'El estudiante ' . $student->user_name . ' no ha sido encontrado'], 404);
             }
         } else {
 
