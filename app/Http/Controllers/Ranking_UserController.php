@@ -47,8 +47,9 @@ class Ranking_UserController extends Controller
 
 
     /* FUNCIÓN KICKOFF: Está función sirve para eliminar a un alumno de un ranking. Para ello
-       comprobará si el Usuario intentándolo es un profesor, después rellena el objeto Student
-       con los datos del alumno...*/
+       comprobará si el Usuario intentándolo es un profesor, después rellenará Student con los 
+       datos dónde id_user sea igual id_alumno. Si student es encontrado, lo elimina y te manda
+       un mensaje acorde al éxito de esta acción*/
     public function kickoff(Request $request, $id_alumno)
     {
         $user = $request->user();
@@ -67,7 +68,7 @@ class Ranking_UserController extends Controller
         }
     }
 
-    /* */
+    /* FUNCIÓN ACTUALIZA PUNTOS: */
     public function update_points(Request $request, $id_alumno)
     {
         $user = $request->user();
@@ -92,7 +93,9 @@ class Ranking_UserController extends Controller
         }
     }
 
-    /* */
+    /* FUNCIÓN MOSTRAR ESTUDIANTE: Está función sirve para devolver en formato JSON todos
+       los usuarios que tengan el rol de estduiante y los ordena por sus puntos en orden
+       descendiente. */
     public function show_students(Request $request)
     {
         $students = User::where('rol', 'student')->orderBy('points', 'desc')->get();
