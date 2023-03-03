@@ -8,7 +8,6 @@ use App\Models\Ranking;
 use App\Models\User;
 
 
-
 class Ranking_UserController extends Controller
 {
 
@@ -18,31 +17,21 @@ class Ranking_UserController extends Controller
        Por último comprueba si se han guardado estos cambios y te lanza varios mensajes para ver
        si la operación ha sido exitosa, si ha fallado, y algunos de los motivos de fallo.*/
 
-    public function insert(Request $request, $id_alumno)
+    public function insert(Request $request)
     {
         $user = $request->user();
         /*TODO: Comprobar si se puede entrar en este IF (yo creo que sí) */
-        if (isset($user->rol) && $user->rol == "profesor") {
-           
-            $alumno = User::find($id_alumno);
 
-            if ($alumno) {
-                $ranking_user = new Ranking_User();
-                $ranking_user->id_user = $alumno->id;
-                $ranking_user->user_name = $alumno->nick;
-                $ranking_user->points = 0;
+        $ranking_user = new Ranking_User();
+        $ranking_user->id_user = $user->id;
+        $ranking_user->user_name = $user->nick;
+        $ranking_user->points = 0;
 
-                if ($ranking_user->save()) {
-                    return response()->json(['success' => true, 'message' => 'Alumno agregado correctamente']);
-                } else {
-                    return response()->json(['success' => false, 'message' => 'No se pudo agregar el alumno al ranking']);
-                }
-            } else {
-                return response()->json(['success' => false, 'message' => 'No se encontró al alumno']);
-            }
-        } else {
-            return response()->json(['success' => false, 'message' => 'No tienes permiso para realizar esta acción']);
+        if ($ranking_user->save()) {
+            return response()->json(['success' => true, 'message' => 'Alumno agregado correctamente']);
         }
+        return response()->json(['success' => false, 'message' => 'No se pudo agregar el alumno al ranking']);
+
     }
 
 
