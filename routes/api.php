@@ -24,6 +24,9 @@ Route::group( ['middleware' => ["auth:sanctum"]], function(){
     //Route::get('user-profile', [UserController::class, 'userProfile']);
     Route::get('create', [RankingController::class, 'create']);
     Route::get('logout', [UserController::class, 'logout']);
+    // Ruta para obtener JSON del usuario
+    Route::get('user/json', [UserController::class, 'getUserJSON']);
+  
 });
 
 //GET http://127.0.0.1:8000/api/user postman, devuelve el usuario logeado actual
