@@ -29,6 +29,8 @@ class UserController extends Controller
         $user->lastname = $request->lastname;
         $user->school = $request->school;
         $user->date = $request->date;
+        $user->img = 'public/images/default.png';
+
 
         if (isset($user->school)) {
             $user->rol = "teacher";
@@ -37,7 +39,7 @@ class UserController extends Controller
         }
 
         $user->save();
-        //autologin
+
         $token = $user->createToken("auth_token")->plainTextToken;
         return response()->json([
             "status" => 1,
@@ -77,6 +79,11 @@ class UserController extends Controller
                 "msg" => "Usuario no registrado",
             ], 404);
         }
+    }
+
+    public function userprofile(Request $request){
+        $user = $request->user();
+        return $user;
     }
 
     public function logout(Request $request)

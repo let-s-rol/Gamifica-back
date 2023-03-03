@@ -11,15 +11,11 @@ use App\Models\User;
 class RankingController extends Controller
 {
 
-    /* FUNCIÓN DE AUTENTIFICACIÓN: Comprueba si hay algún Usuario autentificado. En caso de no haberlo
-       devuelve un NULL.*/
     public function getAuthUser(Request $request){
         $user = $request->user();
         return $user;
     }
 
-
-    /*FUNCIÓN CREAR RANKING: Está función sirve para crear Rankings. Para ello  */
     public function create(Request $request)
     {
         $user = $request->user();

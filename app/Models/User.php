@@ -27,7 +27,8 @@ class User extends Authenticatable
         'password',
         'shool',
         'date',
-        'rol'
+        'rol',
+        'img'
     ];
 
 
