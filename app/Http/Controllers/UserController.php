@@ -94,4 +94,17 @@ class UserController extends Controller
             "msg" => "Cierre de Sesión",
         ]);
     }
+
+    
+
+    /*ESTA ES LA FUNCIÓN GENERAL PARA PILLAR EL JSON DE USUARIO */
+
+    public function getUserJSON(Request $request)
+    {
+        $user = $request->user();
+    
+        return response()->json($user);
+    }
+
+    
 }
