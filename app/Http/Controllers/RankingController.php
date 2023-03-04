@@ -11,7 +11,8 @@ use App\Models\User;
 class RankingController extends Controller
 {
 
-    public function getAuthUser(Request $request){
+    public function getAuthUser(Request $request)
+    {
         $user = $request->user();
         return $user;
     }
@@ -19,16 +20,23 @@ class RankingController extends Controller
     public function create(Request $request)
     {
         $user = $request->user();
-        
-        if (isset($user->rol)=="profesor") {
-            
+
+        if (isset($user->rol) == "profesor") {
+
             $request->validate([
                 'ranking_name' => 'required | unique:ranking',
+                'img' => 'nullable'
             ]);
-            
+
             $ranking = new Ranking();
-            $ranking->ranking_name=$request->ranking_name;
-            $ranking->owner=$user->nick;
+            $ranking->ranking_name = $request->ranking_name;
+            $ranking->owner = $user->nick;
+            if (isset($request->img)) {
+                $ranking->img = $request->img;
+            } else {
+                $ranking->img = 'public/images/default.png';
+            }
+
             $ranking->save();
 
             return response()->json([
@@ -42,24 +50,27 @@ class RankingController extends Controller
                 "msg" => "Han habido daddy issues",
             ]);
         }
-        
+
     }
-    //@TODO mirar si es necesario hacer un control de acceso para que solo el creador del
-    //ranking pueda borrar el ranking en cuestión.
+
     public function delete(Request $request, $ranking_id)
     {
         $user = $request->user();
-        
-        if (isset($user->rol)=="profesor") {
-            
-            $ranking = Ranking::find($ranking_id);
+        $ranking = Ranking::find($ranking_id);
+
+        if (isset($ranking->owner) === $user->nick) {
+
             $ranking->delete();
 
-        } else {
             return response()->json([
-                "status" => 0,
-                "msg" => "Han habido daddy issues",
+                "status" => 1,
+                "msg" => "Ranking eliminado con éxito",
             ]);
-        } 
+        }
+        return response()->json([
+            "status" => 0,
+            "msg" => "Han habido un error",
+        ]);
+
     }
 }

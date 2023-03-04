@@ -81,10 +81,6 @@ class UserController extends Controller
         }
     }
 
-    public function userprofile(Request $request){
-        $user = $request->user();
-        return $user;
-    }
 
     public function logout(Request $request)
     {
@@ -95,16 +91,13 @@ class UserController extends Controller
         ]);
     }
 
-    
-
     /*ESTA ES LA FUNCIÓN GENERAL PARA PILLAR EL JSON DE USUARIO */
 
-    public function getUserJSON(Request $request)
+    public function userprofile(Request $request)
     {
         $user = $request->user();
-    
         return response()->json($user);
     }
 
-    
+
 }

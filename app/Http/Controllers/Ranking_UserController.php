@@ -38,46 +38,36 @@ class Ranking_UserController extends Controller
     /* FUNCIÓN KICKOFF: Está función sirve para eliminar a un alumno de un ranking. Para ello
        comprobará si el Usuario intentándolo es un profesor, después rellena el objeto Student
        con los datos del alumno...*/
-    public function kickoff(Request $request, $id_alumno)
+    public function kickoff(Request $request, $id_alumno, $id_ranking)
     {
         $user = $request->user();
 
         if (isset($user->rol) && $user->rol == "profesor") {
-            $student = Ranking_User::where('id_user', $id_alumno)->first();
 
-            if ($student) {
-                $student->delete();
-                return response()->json(['message' => 'El alumno ha sido eliminado del ranking']);
-            } else {
-                return response()->json(['message' => 'El alumno no ha sido encontrado en el ranking'], 404);
-            }
-        } else {
-            return response()->json(['message' => 'No tiene permisos para realizar esta acción'], 403);
+            $student = User::where('id', $id_alumno)->first();
+            $ranking_student = Ranking_User::where('id_ranking',$id_ranking)->where('id_user',$student->id);
+
+            $ranking_student->delete();
+
+
         }
     }
 
     /* */
-    public function update_points(Request $request, $id_alumno)
+    public function update_points(Request $request, $id_alumno, $id_ranking)
     {
         $user = $request->user();
 
-        if (isset($user->rol) == "profesor") {
+        if (isset($user->rol) && $user->rol == "profesor") {
 
-            $student = Ranking_User::where('id_user', $id_alumno)->first();
+            $request->validate([
+                'points' => 'required'
+            ]);
+            $student = User::where('id', $id_alumno)->first();
+            $ranking_student = Ranking_User::where('id_ranking',$id_ranking)->where('id_user',$student->id);
+            $ranking_student->points=$request->points;
+            $ranking_student->update();
 
-            if ($student) {
-
-                $student->points = $request->points;
-                $student->save();
-
-                return response()->json(['message' => 'Los puntos del estudiante ' . $student->user_name . ' han sido actualizados'], 200);
-            } else {
-
-                return response()->json(['message' => 'El estudiante ' . $student->user_name . ' no ha sido encontrado'], 404);
-            }
-        } else {
-
-            return response()->json(['message' => 'No tienes permisos para actualizar los puntos'], 401);
         }
     }
 
