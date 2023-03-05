@@ -92,7 +92,6 @@ class UserController extends Controller
     }
 
     /*ESTA ES LA FUNCIÓN GENERAL PARA PILLAR EL JSON DE USUARIO */
-
     public function userprofile(Request $request)
     {
         $user = $request->user();

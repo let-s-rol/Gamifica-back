@@ -20,7 +20,6 @@ class Ranking_UserController extends Controller
     public function insert(Request $request)
     {
         $user = $request->user();
-        /*TODO: Comprobar si se puede entrar en este IF (yo creo que sí) */
 
         $ranking_user = new Ranking_User();
         $ranking_user->id_user = $user->id;
