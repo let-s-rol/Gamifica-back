@@ -27,10 +27,11 @@ class Ranking_UserController extends Controller
         $ranking_user->points = 0;
 
         if ($ranking_user->save()) {
+
             return response()->json(['success' => true, 'message' => 'Alumno agregado correctamente']);
         }
-        return response()->json(['success' => false, 'message' => 'No se pudo agregar el alumno al ranking']);
 
+        return response()->json(['success' => false, 'message' => 'No se pudo agregar el alumno al ranking']);
     }
 
 
@@ -44,11 +45,9 @@ class Ranking_UserController extends Controller
         if (isset($user->rol) && $user->rol == "profesor") {
 
             $student = User::where('id', $id_alumno)->first();
-            $ranking_student = Ranking_User::where('id_ranking',$id_ranking)->where('id_user',$student->id);
+            $ranking_student = Ranking_User::where('id_ranking', $id_ranking)->where('id_user', $student->id)->first();
 
             $ranking_student->delete();
-
-
         }
     }
 
@@ -63,17 +62,22 @@ class Ranking_UserController extends Controller
                 'points' => 'required'
             ]);
             $student = User::where('id', $id_alumno)->first();
-            $ranking_student = Ranking_User::where('id_ranking',$id_ranking)->where('id_user',$student->id);
-            $ranking_student->points=$request->points;
-            $ranking_student->update();
+            $ranking_student = Ranking_User::where('id_ranking', $id_ranking)->where('id_user', $student->id)->first();
+            $ranking_student->points = $request->points;
 
+            $ranking_student->update();
         }
     }
 
     /* */
-    public function show_students(Request $request)
+    public function show_students(Request $request, $id_ranking)
     {
-        $students = User::where('rol', 'student')->orderBy('points', 'desc')->get();
+        $ranking = Ranking_User::find($id_ranking); //se obtiene ranking deseado
+        $students = $ranking->users()
+            ->where('rol', 'student')
+            ->orderBy('ranking_user.points', 'desc')
+            ->get();
+
         return response()->json($students);
     }
 }

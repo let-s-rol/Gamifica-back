@@ -14,10 +14,10 @@ return new class extends Migration
             $table->string('ranking_name');
             $table->string('owner');
             $table->string('img')->nullable();
-
+            $table->string('code');
+            
             $table->foreign('owner')->references('nick')->on('user');
-
-            //$table->timestamps();
+            $table->timestamps();
         });
     }
 

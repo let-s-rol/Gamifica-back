@@ -59,9 +59,9 @@ class UserController extends Controller
 
         if (isset($user->id)) {
             if (Hash::check($request->password, $user->password)) {
-                //creamos el token
+
                 $token = $user->createToken("auth_token")->plainTextToken;
-                //si está todo ok
+
                 return response()->json([
                     "status" => 1,
                     "msg" => "¡Usuario logueado exitosamente!",
