@@ -7,16 +7,19 @@ use App\Models\Task;
 
 class TaskController extends Controller
 {
-    // Schema::create('task', function (Blueprint $table) {
-    //     $table->id('');
-    //     $table->unsignedBigInteger('id_ranking');
-    //     $table->string('ranking_name');
 
-    //     $table->foreign('id_ranking')->references('id_ranking')->on('ranking')->onDelete('cascade');
-    //     $table->timestamps();
-    // });
+    public function createTaskByRanking($id_ranking, $ranking_name){
+        $task = new Task();
+        $task->id_ranking = $id_ranking;
+        $task->ranking_name = $ranking_name;
+        $task->save();
+    }
 
-    public function createTaskByRanking(){
-        
+    public function deleteTaskByRanking($id_ranking){
+        Task::where('id_ranking', $id_ranking)->delete();
+    }
+
+    public function pickTaskByRanking(Request $request, $id_ranking){
+        Task::where('id_ranking', $id_ranking)->get();
     }
 }

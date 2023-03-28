@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Ranking;
 use App\Models\User;
 use Illuminate\Support\Str;
+use App\Http\Controllers\TaskController;
 
 
 class RankingController extends Controller
@@ -40,6 +41,8 @@ class RankingController extends Controller
             }
 
             $ranking->save();
+            $task = app(TaskController::class);
+            $task->createTaskByRanking($ranking->id_ranking, $ranking->ranking_name);
 
             return response()->json([
                 "status" => 1,
