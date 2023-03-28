@@ -17,7 +17,9 @@ return new class extends Migration
             $table->unsignedBigInteger('task_ranking_id');
             $table->unsignedBigInteger('id_user');
             $table->binary('file');
-
+            $table->boolean('corrected')->default(false);
+            $table->decimal('note', 2, 2);
+            
             $table->foreign('task_ranking_id')->references('id')->on('task')->onDelete('cascade');
             $table->foreign('id_user')->references('id')->on('user');
             $table->timestamps();

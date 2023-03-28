@@ -8,8 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Task extends Model
 {
     use HasFactory;
+    
+    public $table = "task";
+ 
+    protected $fillable = [
+        'id_ranking',
+        'ranking_name'
+    ];
 
-// Schema::create('task', function (Blueprint $table) {
+    // Schema::create('task', function (Blueprint $table) {
     //     $table->id('');
     //     $table->unsignedBigInteger('id_ranking');
     //     $table->string('ranking_name');
@@ -17,9 +24,4 @@ class Task extends Model
     //     $table->foreign('id_ranking')->references('id_ranking')->on('ranking')->onDelete('cascade');
     //     $table->timestamps();
     // });
-    
-    public $table = "task";
-
-
-    
 }
