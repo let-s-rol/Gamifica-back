@@ -98,7 +98,7 @@ class RankingController extends Controller
 
             return response()->json([
                 "status" => 1,
-                "msg" => "Código regenerado con éxito",
+                "msg" => "Código generado con éxito",
                 "new_code" => $new_code,
             ]);
         }
