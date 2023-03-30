@@ -11,12 +11,13 @@ class UserController extends Controller
     public function register(Request $request)
     {
 
+       
         $request->validate([
             'name' => 'required',
             'lastname' => 'required',
             'nick' => 'required | unique:User',
             'email' => 'required | email | unique:User',
-            'password' => 'required | confirmed',
+            'password' => 'required',
             'school' => 'nullable',
             'date' => 'nullable'
         ]);
