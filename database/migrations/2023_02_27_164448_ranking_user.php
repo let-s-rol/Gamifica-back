@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_user');
             $table->string('user_name');
             $table->integer('points');
+            $table->boolean('validar')->default(null);
 
             $table->foreign('id_ranking')->references('id_ranking')->on('ranking')->onDelete('cascade');
             $table->foreign('id_user')->references('id')->on('user');
