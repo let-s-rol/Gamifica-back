@@ -9,7 +9,7 @@ class Task_userController extends Controller
 
 {
 
-    public function insert(Request $request, $id_task)
+    public function insertTask(Request $request, $id_task)
     {
         $request->validate([
             'file' => 'required|file'
@@ -92,39 +92,6 @@ class Task_userController extends Controller
             'success' => true,
             'message' => 'Tareas del usuario',
             'data' => $tasks
-        ]);
-    }
-
-    public function deleteTask(Request $request, $id_task)
-    {
-        $user = $request->user();
-
-        $task = Task_user::find($id_task);
-
-        if (!$task) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Tarea no encontrada',
-            ]);
-        }
-
-        if ($task->id_user != $user->id && $user->rol != 'admin') {
-            return response()->json([
-                'success' => false,
-                'message' => 'Solo el propietario de la tarea o un administrador pueden eliminar la tarea',
-            ]);
-        }
-
-        if ($task->delete()) {
-            return response()->json([
-                'success' => true,
-                'message' => 'Tarea eliminada correctamente',
-            ]);
-        }
-
-        return response()->json([
-            'success' => false,
-            'message' => 'No se pudo eliminar la tarea',
         ]);
     }
 }

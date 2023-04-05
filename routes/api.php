@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Ranking_UserController;
+use App\Http\Controllers\Task_userController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +34,16 @@ Route::group(['middleware' => ["auth:sanctum"]], function () {
     Route::delete('kick_student', [Ranking_UserController::class, 'kickoff']);
     Route::post('update_points', [Ranking_UserController::class, 'update_points']);
     Route::get('show_students', [Ranking_UserController::class, 'show_students']);
+
+    //TASKS
+
+
+    Route::post('tasks/{id_task}/insert', [Task_userController::class, 'insert']);
+    Route::post('tasks/{id_task}/upload', [Task_userController::class, 'upload']);
+    Route::get('tasks/{id_task}/download', [Task_userController::class, 'download']);
+    Route::get('tasks', [Task_userController::class, 'showTaskByUser']);
+    Route::delete('tasks/{id_task}/delete', [Task_userController::class, 'delete']);
+
 });
 
 //GET http://127.0.0.1:8000/api/user postman, devuelve el usuario logeado actual
