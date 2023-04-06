@@ -13,7 +13,7 @@ return new class extends Migration
     {
 
         Schema::create('task_user', function (Blueprint $table) {
-            $table->id('');
+            $table->id();
             $table->unsignedBigInteger('task_ranking_id');
             $table->unsignedBigInteger('id_user');
             $table->binary('file');
