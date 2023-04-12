@@ -35,21 +35,15 @@ class RankingController extends Controller
             $ranking->owner = $user->nick;
             $ranking->code = Str::random(10);
 
-            if (isset($request->img)) {
-                $ranking->img = $request->img;
-            } else {
-                $ranking->img = 'public/images/default.png';
-            }
-
             // Si se ha subido una imagen, se guarda su contenido en la base de datos
-        if ($request->hasFile('img')) {
-            $imagePath = $request->file('img')->getRealPath();
-            $image = file_get_contents($imagePath);
-            $ranking->img = $image;
-        } else {
-            $defaultImage = file_get_contents(public_path('img/default.png'));
-            $character->base_character_img = $defaultImage;
-        }
+            if ($request->hasFile('img')) {
+                $imagePath = $request->file('img')->getRealPath();
+                $image = file_get_contents($imagePath);
+                $ranking->img = $image;
+            } else {
+                $defaultImage = file_get_contents(public_path('img/default.png'));
+                $ranking->img = $defaultImage;
+            }
 
             $ranking->save();
             $task = app(TaskController::class);
