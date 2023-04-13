@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('points');
             $table->boolean('validar')->default(null);
 
-            $table->foreign('id_ranking')->references('id_ranking')->on('ranking')->onDelete('cascade');
+            $table->foreign('id_ranking')->references('id')->on('ranking')->onDelete('cascade');
             $table->foreign('id_user')->references('id')->on('user');
             $table->timestamps();
         });

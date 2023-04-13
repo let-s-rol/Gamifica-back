@@ -10,6 +10,7 @@ class Ranking extends Model
     use HasFactory;
 
     public $table = "ranking";
+    protected $primarykey = 'id_ranking';
 
     protected $fillable = [
         'ranking_name'

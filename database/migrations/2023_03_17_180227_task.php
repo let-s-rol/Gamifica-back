@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_ranking');
             $table->string('ranking_name');
 
-            $table->foreign('id_ranking')->references('id_ranking')->on('ranking')->onDelete('cascade');
+            $table->foreign('id_ranking')->references('id')->on('ranking')->onDelete('cascade');
             $table->timestamps();
         });
     }
