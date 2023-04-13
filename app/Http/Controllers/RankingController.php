@@ -27,7 +27,7 @@ class RankingController extends Controller
 
             $request->validate([
                 'ranking_name' => 'required | unique:ranking',
-                //'img' => 'nullable| image'
+                'img' => 'nullable| image'
             ]);
 
             $ranking = new Ranking();
@@ -36,7 +36,7 @@ class RankingController extends Controller
             $ranking->code = Str::random(10);
 
             // Si se ha subido una imagen, se guarda su contenido en la base de datos
-           /* if ($request->hasFile('img')) {
+           if ($request->hasFile('img')) {
                 $imagePath = $request->file('img')->getRealPath();
                 $image = file_get_contents($imagePath);
                 $ranking->img = $image;
@@ -44,10 +44,10 @@ class RankingController extends Controller
                 $defaultImage = file_get_contents(public_path('img/default.png'));
                 $ranking->img = $defaultImage;
             }
-              */  
+               
             $ranking->save();
             $task = app(TaskController::class);
-            $task->createBaseTaskByRanking($ranking->id_ranking, $ranking->ranking_name);
+            $task->createBaseTaskByRanking($ranking->id, $ranking->ranking_name);
             
             return response()->json([
                 "status" => 1,
@@ -61,10 +61,11 @@ class RankingController extends Controller
         }
     }
 
-    public function delete(Request $request, $ranking_id)
+    public function delete(Request $request, $id)
     {
         $user = $request->user();
-        $ranking = Ranking::find($ranking_id);
+        
+        $ranking = Ranking::find($id);
 
         if (isset($ranking->owner) === $user->nick) {
 
@@ -93,10 +94,10 @@ class RankingController extends Controller
         return null;
     }
 
-    public function regenerateCode(Request $request, $ranking_id)
+    public function regenerateCode(Request $request, $id)
     {
         $user = $request->user();
-        $ranking = Ranking::find($ranking_id);
+        $ranking = Ranking::find($id);
 
         if (isset($ranking->owner) === $user->nick) {
 
