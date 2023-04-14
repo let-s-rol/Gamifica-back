@@ -12,7 +12,6 @@ class Task extends Model
     public $table = "task";
  
     protected $fillable = [
-        'id_ranking',
         'ranking_name',
         'name',
         'sentence'

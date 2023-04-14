@@ -19,13 +19,12 @@ class Task_userController extends Controller
 
         //$user-rol = "teacher"
         $task = new Task_user();
+        $task->id_task=$id_task;
         $task->id_user = $user->id;
         $task->file = $request->file;
         $file = $request->file('file');
         $contents = file_get_contents($file->path());
         $task->file = $contents;
-
-
 
         //EL PROFESOR DEBE ENVIAR TAREA CUANDO LE SALGA DEL PITO.
         //PUEDE ENVIAR N TAREAS Y LOS ALUMNOS DEBERÁN ENTREARLAS.
