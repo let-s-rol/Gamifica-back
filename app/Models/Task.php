@@ -13,15 +13,9 @@ class Task extends Model
  
     protected $fillable = [
         'id_ranking',
-        'ranking_name'
+        'ranking_name',
+        'name',
+        'sentence'
     ];
 
-    // Schema::create('task', function (Blueprint $table) {
-    //     $table->id('');
-    //     $table->unsignedBigInteger('id_ranking');
-    //     $table->string('ranking_name');
-
-    //     $table->foreign('id_ranking')->references('id_ranking')->on('ranking')->onDelete('cascade');
-    //     $table->timestamps();
-    // });
 }

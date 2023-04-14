@@ -13,12 +13,6 @@ use App\Http\Controllers\TaskController;
 class RankingController extends Controller
 {
 
-    public function getAuthUser(Request $request)
-    {
-        $user = $request->user();
-        return $user;
-    }
-
     public function create(Request $request)
     {
         $user = $request->user();
@@ -46,8 +40,6 @@ class RankingController extends Controller
             }
                
             $ranking->save();
-            $task = app(TaskController::class);
-            $task->createBaseTaskByRanking($ranking->id, $ranking->ranking_name);
             
             return response()->json([
                 "status" => 1,

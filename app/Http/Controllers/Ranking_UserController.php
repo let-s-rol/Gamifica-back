@@ -17,18 +17,31 @@ class Ranking_UserController extends Controller
        Por último comprueba si se han guardado estos cambios y te lanza varios mensajes para ver
        si la operación ha sido exitosa, si ha fallado, y algunos de los motivos de fallo.*/
 
-    public function insert(Request $request)
+    public function insert(Request $request, $code)
     {
         $user = $request->user();
 
+        // Buscamos el ranking correspondiente al código proporcionado
+        $ranking = Ranking::where('code', $code)->first();
+
+        if (!$ranking) {
+            return response()->json(['success' => false, 'message' => 'No se encontró el ranking correspondiente']);
+        }
+
+        // Validamos el código proporcionado con el código del ranking
+        if ($ranking->code != $code) {
+            return response()->json(['success' => false, 'message' => 'El código proporcionado no coincide con el código del ranking']);
+        }
         $ranking_user = new Ranking_User();
+        $ranking_user->id_ranking = $ranking->id;
         $ranking_user->id_user = $user->id;
         $ranking_user->user_name = $user->nick;
         $ranking_user->points = 0;
+        $ranking_user->validar = false;
 
         if ($ranking_user->save()) {
 
-            return response()->json(['success' => true, 'message' => 'Alumno agregado correctamente']);
+            return response()->json(['success' => true, 'message' => 'Has sido agregado, espera a que el profesor te valide dentro del ranking']);
         }
 
         return response()->json(['success' => false, 'message' => 'No se pudo agregar el alumno al ranking']);
@@ -48,7 +61,7 @@ class Ranking_UserController extends Controller
             }
         } else {
             $ranking_student->validar = true;
-            if ($ranking_student->save()) {
+            if ($ranking_student->update()) {
                 return response()->json(['success' => true, 'message' => 'Alumno validado correctamente']);
             } else {
                 return response()->json(['success' => false, 'message' => 'No se pudo validar al alumno']);

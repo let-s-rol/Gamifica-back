@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('id_ranking');
             $table->string('ranking_name');
+            $table->string('name');
+            $table->string('sentence');
 
             $table->foreign('id_ranking')->references('id')->on('ranking')->onDelete('cascade');
             $table->timestamps();
