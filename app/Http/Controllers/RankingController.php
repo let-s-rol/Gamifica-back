@@ -40,12 +40,6 @@ class RankingController extends Controller
             }
               */ 
             $ranking->save();
-<<<<<<< HEAD
-=======
-            $task = app(TaskController::class);
-            $task->createBaseTaskByRanking($ranking->id, $ranking->ranking_name);
-            $ranking->save();
->>>>>>> 117e7207d15767ec0b8723355f753c97e2270e87
             
             return response()->json([
                 "status" => 1,
