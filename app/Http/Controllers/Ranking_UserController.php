@@ -35,6 +35,12 @@ class Ranking_UserController extends Controller
             // Log the value of $code
             
 
+        $request->validate([
+            'code' => 'required',
+            
+        ]);
+        $code = $request->code;
+
         // Buscamos el ranking correspondiente al código proporcionado
         $ranking = Ranking::where('code', $code)->first();
 
