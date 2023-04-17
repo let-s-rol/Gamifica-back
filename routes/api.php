@@ -32,7 +32,7 @@ Route::group(['middleware' => ["auth:sanctum"]], function () {
     Route::post('regenerate_code/{ranking_id}', [RankingController::class, 'regenerateCode']);
 
     //RANKING_USER
-    Route::post('access_ranking', [Ranking_UserController::class, 'insert']);
+    Route::post('access_ranking/', [Ranking_UserController::class, 'insert']);
     Route::delete('kick_student/{id_alumno}/{id_ranking}', [Ranking_UserController::class, 'kickoff']);
     Route::post('update_points/{id_alumno}/{id_ranking}', [Ranking_UserController::class, 'update_points']);
     Route::get('show_students', [Ranking_UserController::class, 'show_students']);
