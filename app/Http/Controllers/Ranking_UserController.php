@@ -1,11 +1,12 @@
 <?php
-
 namespace App\Http\Controllers;
+
 
 use Illuminate\Http\Request;
 use App\Models\Ranking_User;
 use App\Models\Ranking;
 use App\Models\User;
+
 
 
 class Ranking_UserController extends Controller
@@ -17,15 +18,29 @@ class Ranking_UserController extends Controller
        Por último comprueba si se han guardado estos cambios y te lanza varios mensajes para ver
        si la operación ha sido exitosa, si ha fallado, y algunos de los motivos de fallo.*/
 
-    public function insert(Request $request, $code)
+    public function insert(Request $request)
     {
+
+        
         $user = $request->user();
+        //$code = $request->query('code');
+
+        $request -> validate([
+            'code' => 'required'
+        ]);
+
+        $code = $request -> code;
+    
+
+            // Log the value of $code
+            
 
         // Buscamos el ranking correspondiente al código proporcionado
         $ranking = Ranking::where('code', $code)->first();
 
         if (!$ranking) {
             return response()->json(['success' => false, 'message' => 'No se encontró el ranking correspondiente']);
+            
         }
 
         // Validamos el código proporcionado con el código del ranking
