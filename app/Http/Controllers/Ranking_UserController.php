@@ -22,7 +22,7 @@ class Ranking_UserController extends Controller
         $user = $request->user();
 
         $request->validate([
-            'code' => 'required | unique:ranking_user',
+            'code' => 'required',
             
         ]);
         $code = $request->code;
