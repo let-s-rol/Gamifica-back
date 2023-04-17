@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 
@@ -21,23 +22,23 @@ class Ranking_UserController extends Controller
     public function insert(Request $request)
     {
 
-        
+
         $user = $request->user();
         //$code = $request->query('code');
 
-        $request -> validate([
+        $request->validate([
             'code' => 'required'
         ]);
 
-        $code = $request -> code;
-    
+        $code = $request->code;
 
-            // Log the value of $code
-            
+
+        // Log the value of $code
+
 
         $request->validate([
             'code' => 'required',
-            
+
         ]);
         $code = $request->code;
 
@@ -46,7 +47,6 @@ class Ranking_UserController extends Controller
 
         if (!$ranking) {
             return response()->json(['success' => false, 'message' => 'No se encontró el ranking correspondiente']);
-            
         }
 
         // Validamos el código proporcionado con el código del ranking
@@ -135,5 +135,11 @@ class Ranking_UserController extends Controller
             ->get();
 
         return response()->json($students);
+    }
+
+    public function show_pending_users()
+    {
+        $pending_users = Ranking_User::where('validar', false)->get();
+        return response()->json($pending_users);
     }
 }
