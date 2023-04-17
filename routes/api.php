@@ -39,7 +39,7 @@ Route::group(['middleware' => ["auth:sanctum"]], function () {
     Route::get('validate_student/{id}/{validador}', [Ranking_UserController::class, 'validar']);
 
     //TASKS
-    Route::post('tasks/{id_task}/insert', [Task_userController::class, 'insert']);
+    Route::post('tasks/{id_task}/insert', [Task_userController::class, 'insertTask']);
     Route::post('tasks/{id_task}/upload', [Task_userController::class, 'upload']);
     Route::get('tasks/{id_task}/download', [Task_userController::class, 'download']);
     Route::get('tasks', [Task_userController::class, 'showTaskByUser']);
