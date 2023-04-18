@@ -21,8 +21,6 @@ class Ranking_UserController extends Controller
 
     public function insert(Request $request)
     {
-
-
         $user = $request->user();
         //$code = $request->query('code');
 
@@ -31,14 +29,10 @@ class Ranking_UserController extends Controller
         ]);
 
         $code = $request->code;
-
-
         // Log the value of $code
 
-
         $request->validate([
-            'code' => 'required',
-
+            'code' => 'required'
         ]);
         $code = $request->code;
 
@@ -68,11 +62,16 @@ class Ranking_UserController extends Controller
         return response()->json(['success' => false, 'message' => 'No se pudo agregar el alumno al ranking']);
     }
 
-    public function validate_user(Request $request, $id_alumno, $id_ranking)
+    public function validate_user(Request $request)
     {
 
-        $student = User::where('id', $id_alumno)->first();
-        $ranking_student = Ranking_User::where('id_ranking', $id_ranking)->where('id_user', $student->id)->first();
+        $request->validate([
+            'id_alumno' => 'required',
+            'id_ranking' => 'required'
+        ]);
+
+        $student = User::where('id', $request->id_alumno)->first();
+        $ranking_student = Ranking_User::where('id_ranking', $request->id_ranking)->where('id_user', $student->id)->first();
         $ranking_student->validar = true;
         if ($ranking_student->update()) {
             return response()->json(['success' => true, 'message' => 'Alumno validado correctamente']);
@@ -88,14 +87,19 @@ class Ranking_UserController extends Controller
     /* FUNCIÓN KICKOFF: Está función sirve para eliminar a un alumno de un ranking. Para ello
        comprobará si el Usuario intentándolo es un profesor, después rellena el objeto Student
        con los datos del alumno...*/
-    public function kickoff(Request $request, $id_alumno, $id_ranking)
+    public function kickoff(Request $request)
     {
+
+        $request->validate([
+            'id_alumno' => 'required',
+            'id_ranking' => 'required'
+        ]);
         $user = $request->user();
 
         if (isset($user->rol) && $user->rol == "profesor") {
 
-            $student = User::where('id', $id_alumno)->first();
-            $ranking_student = Ranking_User::where('id_ranking', $id_ranking)->where('id_user', $student->id)->first();
+            $student = User::where('id', $request->id_alumno)->first();
+            $ranking_student = Ranking_User::where('id_ranking', $request->id_ranking)->where('id_user', $student->id)->first();
 
             if ($ranking_student->delete()) {
                 return response()->json(['success' => true, 'message' => 'Alumno borrado correctamente']);
