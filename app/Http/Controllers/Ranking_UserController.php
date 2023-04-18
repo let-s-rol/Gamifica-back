@@ -97,7 +97,14 @@ class Ranking_UserController extends Controller
             $student = User::where('id', $id_alumno)->first();
             $ranking_student = Ranking_User::where('id_ranking', $id_ranking)->where('id_user', $student->id)->first();
 
-            $ranking_student->delete();
+            if ($ranking_student->delete()) {
+                return response()->json(['success' => true, 'message' => 'Alumno borrado correctamente']);
+            } else {
+                return response()->json(['success' => false, 'message' => 'No se pudo borrar al alumno']);
+            }
+            if (!$ranking_student) {
+                return response()->json(['success' => false, 'message' => 'No se encontró el alumno en el ranking']);
+            }
         }
     }
 
