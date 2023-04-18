@@ -71,11 +71,6 @@ class Ranking_UserController extends Controller
         ->where('id_user', $student->id)
         ->first();
 
-        if(!$ranking_student){
-            return response()->json(['fail' => true, 'message' => 'Laravel es una mierda']);
-        }
-
-        //$ranking_student->validar = true;
         if ($ranking_student->update(['validar'=>true])) {
             return response()->json(['success' => true, 'message' => 'Alumno validado correctamente']);
         } else {
