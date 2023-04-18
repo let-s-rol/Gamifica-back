@@ -89,7 +89,6 @@ class Ranking_UserController extends Controller
        con los datos del alumno...*/
     public function kickoff(Request $request)
     {
-
         $request->validate([
             'id_alumno' => 'required',
             'id_ranking' => 'required'
@@ -113,8 +112,14 @@ class Ranking_UserController extends Controller
     }
 
     /* */
-    public function update_points(Request $request, $id_alumno, $id_ranking)
+    public function update_points(Request $request)
     {
+
+        $request->validate([
+            'id_alumno' => 'required',
+            'id_ranking' => 'required'
+        ]);
+
         $user = $request->user();
 
         if (isset($user->rol) && $user->rol == "profesor") {
@@ -122,8 +127,8 @@ class Ranking_UserController extends Controller
             $request->validate([
                 'points' => 'required'
             ]);
-            $student = User::where('id', $id_alumno)->first();
-            $ranking_student = Ranking_User::where('id_ranking', $id_ranking)->where('id_user', $student->id)->first();
+            $student = User::where('id', $request->id_alumno)->first();
+            $ranking_student = Ranking_User::where('id_ranking', $request->id_ranking)->where('id_user', $student->id)->first();
             $ranking_student->points = $request->points;
 
             $ranking_student->update();
@@ -131,9 +136,13 @@ class Ranking_UserController extends Controller
     }
 
     /* */
-    public function show_students(Request $request, $id_ranking)
+    public function show_students(Request $request)
     {
-        $ranking = Ranking_User::find($id_ranking); //se obtiene ranking deseado
+
+        $request->validate([
+            'id_ranking' => 'required'
+        ]);
+        $ranking = Ranking_User::find($request->id_ranking); //se obtiene ranking deseado
         $students = $ranking->users()
             ->where('rol', 'student')
             ->orderBy('ranking_user.points', 'desc')

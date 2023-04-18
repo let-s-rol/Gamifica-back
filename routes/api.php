@@ -33,7 +33,7 @@ Route::group(['middleware' => ["auth:sanctum"]], function () {
 
     //RANKING_USER
     Route::post('access_ranking/', [Ranking_UserController::class, 'insert']);
-    Route::post('update_points/{id_alumno}/{id_ranking}', [Ranking_UserController::class, 'update_points']);
+    Route::post('update_points', [Ranking_UserController::class, 'update_points']);
     Route::get('show_students', [Ranking_UserController::class, 'show_students']);
     Route::get('show_pending_users', [Ranking_UserController::class, 'show_pending_users']);
     Route::put('validate_student', [Ranking_UserController::class, 'validate_user']);
