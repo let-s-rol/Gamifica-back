@@ -10,6 +10,7 @@ class Ranking_User extends Model
     use HasFactory;
 
     public $table = "ranking_user";
+    protected $primaryKey = 'id_user';
 
      /**
      * The attributes that are mass assignable.
@@ -18,6 +19,7 @@ class Ranking_User extends Model
      */
     protected $fillable = [
         'user',
-        'points'
+        'points',
+        'validar'
     ];
 }

@@ -71,14 +71,19 @@ class Ranking_UserController extends Controller
         ->where('id_user', $student->id)
         ->first();
 
-        if ($ranking_student->update(['validar'=>true])) {
-            return response()->json(['success' => true, 'message' => 'Alumno validado correctamente']);
-        } else {
-            return response()->json(['success' => false, 'message' => 'No se pudo validar al alumno']);
-        }
         if (!$ranking_student) {
             return response()->json(['success' => false, 'message' => 'No se encontró el alumno en el ranking']);
         }
+
+
+        if ($ranking_student->update(['validar'=>true])) {
+
+
+            return response()->json(['success' => true, 'message' => 'Alumno validado correctamente','ranking_student' => $ranking_student]);
+        } else {
+            return response()->json(['success' => false, 'message' => 'No se pudo validar al alumno']);
+        }
+
     }
 
 
