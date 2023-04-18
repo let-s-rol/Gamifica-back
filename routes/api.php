@@ -36,7 +36,7 @@ Route::group(['middleware' => ["auth:sanctum"]], function () {
     Route::post('update_points', [Ranking_UserController::class, 'update_points']);
     Route::get('show_students', [Ranking_UserController::class, 'show_students']);
     Route::get('show_pending_users', [Ranking_UserController::class, 'show_pending_users']);
-    Route::put('validate_student', [Ranking_UserController::class, 'validate_user']);
+    Route::post('validate_student', [Ranking_UserController::class, 'validate_user']);
     Route::delete('kick_student', [Ranking_UserController::class, 'kickoff']);
     //TASKS
     Route::post('tasks/{id_task}/insert', [Task_userController::class, 'insertTask']);
