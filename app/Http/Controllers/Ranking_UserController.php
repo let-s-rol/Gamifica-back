@@ -27,13 +27,6 @@ class Ranking_UserController extends Controller
         $request->validate([
             'code' => 'required'
         ]);
-
-        $code = $request->code;
-        // Log the value of $code
-
-        $request->validate([
-            'code' => 'required'
-        ]);
         $code = $request->code;
 
         // Buscamos el ranking correspondiente al código proporcionado
@@ -82,8 +75,8 @@ class Ranking_UserController extends Controller
             return response()->json(['fail' => true, 'message' => 'Laravel es una mierda']);
         }
 
-        $ranking_student->validar = true;
-        if ($ranking_student->update()) {
+        //$ranking_student->validar = true;
+        if ($ranking_student->update(['validar'=>true])) {
             return response()->json(['success' => true, 'message' => 'Alumno validado correctamente']);
         } else {
             return response()->json(['success' => false, 'message' => 'No se pudo validar al alumno']);
