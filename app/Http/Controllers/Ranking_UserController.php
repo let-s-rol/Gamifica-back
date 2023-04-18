@@ -65,10 +65,15 @@ class Ranking_UserController extends Controller
     public function validate_user(Request $request)
     {
 
+        echo $request;
+        return;
+
+
         $request->validate([
             'id_alumno' => 'required',
             'id_ranking' => 'required'
         ]);
+
 
         $student = User::where('id', $request->id_alumno)->first();
         $ranking_student = Ranking_User::where('id_ranking', $request->id_ranking)->where('id_user', $student->id)->first();
