@@ -65,18 +65,23 @@ class Ranking_UserController extends Controller
     public function validate_user(Request $request)
     {
 
-        echo $request;
-        return;
-
 
         $request->validate([
-            'id_user' => 'required',
-            'id_ranking' => 'required'
+            'id_user' => 'required|exists:user,id',
+            'id_ranking' => 'required|exists:ranking,id'
         ]);
 
 
         $student = User::where('id', $request->id_user)->first();
-        $ranking_student = Ranking_User::where('id_ranking', $request->id_ranking)->where('id_user', $student->id)->first();
+        
+        $ranking_student = Ranking_User::where('id_ranking', $request->id_ranking)
+        ->where('id_user', $student->id)
+        ->first();
+
+        if(!$ranking_student){
+            return response()->json(['fail' => true, 'message' => 'Laravel es una mierda']);
+        }
+
         $ranking_student->validar = true;
         if ($ranking_student->update()) {
             return response()->json(['success' => true, 'message' => 'Alumno validado correctamente']);
