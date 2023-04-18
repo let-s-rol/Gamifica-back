@@ -68,25 +68,19 @@ class Ranking_UserController extends Controller
         return response()->json(['success' => false, 'message' => 'No se pudo agregar el alumno al ranking']);
     }
 
-    public function validar(Request $request, $id, $validador)
+    public function validate_user(Request $request, $id_alumno, $id_ranking)
     {
-        $ranking_student = Ranking_User::where('id_user', $id)->first();
+
+        $student = User::where('id', $id_alumno)->first();
+        $ranking_student = Ranking_User::where('id_ranking', $id_ranking)->where('id_user', $student->id)->first();
+        $ranking_student->validar = true;
+        if ($ranking_student->update()) {
+            return response()->json(['success' => true, 'message' => 'Alumno validado correctamente']);
+        } else {
+            return response()->json(['success' => false, 'message' => 'No se pudo validar al alumno']);
+        }
         if (!$ranking_student) {
             return response()->json(['success' => false, 'message' => 'No se encontró el alumno en el ranking']);
-        }
-        if ($validador == 0) {
-            if ($ranking_student->delete()) {
-                return response()->json(['success' => true, 'message' => 'Alumno eliminado correctamente']);
-            } else {
-                return response()->json(['success' => false, 'message' => 'No se pudo eliminar el alumno del ranking']);
-            }
-        } else {
-            $ranking_student->validar = true;
-            if ($ranking_student->update()) {
-                return response()->json(['success' => true, 'message' => 'Alumno validado correctamente']);
-            } else {
-                return response()->json(['success' => false, 'message' => 'No se pudo validar al alumno']);
-            }
         }
     }
 
