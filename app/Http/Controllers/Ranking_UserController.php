@@ -66,6 +66,8 @@ class Ranking_UserController extends Controller
         return response()->json(['success' => false, 'message' => 'No se pudo agregar el alumno al ranking']);
     }
 
+
+
     public function validate_user(Request $request)
     {
         $request->validate([
@@ -77,11 +79,17 @@ class Ranking_UserController extends Controller
             ->where('id_ranking', $request->id_ranking)
             ->first();
 
+        if (!$ranking_student) {
+            return response()->json(['success' => false, 'message' => 'No se encontró el alumno en el ranking']);
+        }
+
         $ranking_student->validar = true;
         $ranking_student->update();
 
         return response()->json(['success' => true, 'message' => 'Alumno validado correctamente', 'ranking_student' => $ranking_student]);
     }
+
+
 
     /* FUNCIÓN KICKOFF: Está función sirve para eliminar a un alumno de un ranking. Para ello
        comprobará si el Usuario intentándolo es un profesor, después rellena el objeto Student
@@ -97,6 +105,11 @@ class Ranking_UserController extends Controller
             ->where('id_ranking', $request->id_ranking)
             ->first();
 
+        if (!$ranking_student) {
+            return response()->json(['success' => false, 'message' => 'No se encontró el alumno en el ranking']);
+        }
+
+        
         $ranking_student->delete();
 
         return response()->json(['success' => true, 'message' => 'Alumno borrado correctamente']);
