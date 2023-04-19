@@ -102,7 +102,6 @@ class Ranking_UserController extends Controller
         return response()->json(['success' => true, 'message' => 'Alumno borrado correctamente']);
     }
 
-    /* */
     public function update_points(Request $request)
     {
 
@@ -126,7 +125,6 @@ class Ranking_UserController extends Controller
         }
     }
 
-    /* */
     public function show_students(Request $request)
     {
 
