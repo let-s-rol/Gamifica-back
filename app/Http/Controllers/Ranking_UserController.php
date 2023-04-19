@@ -86,15 +86,8 @@ class Ranking_UserController extends Controller
             return response()->json(['success' => false, 'message' => 'No se encontró el alumno en el ranking']);
         }
 
-        // $ranking_student->validar = true;
-        // $ranking_student->save();
-
-        // $ranking_student->update(['validar' => true]);
-
-        $ranking_student->fill(['validar' => true]);
-        $ranking_student->save();
-
-
+        $ranking_student->validar = true;
+        $ranking_student->update();
 
         return response()->json(['success' => true, 'message' => 'Alumno validado correctamente', 'ranking_student' => $ranking_student]);
     }
