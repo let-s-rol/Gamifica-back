@@ -29,9 +29,12 @@ class TaskController extends Controller
         ]);
     }
 
-    public function deleteTaskByRanking($id_ranking)
+    public function deleteTaskByRanking(Request $request)
     {
-        Task::where('id_ranking', $id_ranking)->delete();
+        $request->validate([
+            'id_ranking' => 'required'
+        ]);
+        Task::where('id_ranking', $request->id_ranking)->delete();
     }
 
     public function pickTaskByRanking(Request $request)

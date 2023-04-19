@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Ranking_UserController;
 use App\Http\Controllers\Task_userController;
+use App\Http\Controllers\TaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,7 +39,13 @@ Route::group(['middleware' => ["auth:sanctum"]], function () {
     Route::get('show_pending_users', [Ranking_UserController::class, 'show_pending_users']);
     Route::put('validate_student', [Ranking_UserController::class, 'validate_user']);
     Route::delete('kick_student', [Ranking_UserController::class, 'kickoff']);
+
     //TASKS
+    Route::post('createTask', [TaskController::class, 'createTask']);
+    Route::get('pickTaskByRanking', [TaskController::class, 'pickTaskByRanking']);
+    Route::delete('deleteTaskByRanking', [TaskController::class, 'deleteTaskByRanking']);
+
+    //TASK_USER
     Route::post('tasks/{id_task}/insert', [Task_userController::class, 'insertTask']);
     Route::post('tasks/{id_task}/upload', [Task_userController::class, 'upload']);
     Route::get('tasks/{id_task}/download', [Task_userController::class, 'download']);
