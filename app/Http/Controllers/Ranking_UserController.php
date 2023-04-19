@@ -66,8 +66,6 @@ class Ranking_UserController extends Controller
         return response()->json(['success' => false, 'message' => 'No se pudo agregar el alumno al ranking']);
     }
 
-
-
     public function validate_user(Request $request)
     {
         $request->validate([
@@ -79,17 +77,11 @@ class Ranking_UserController extends Controller
             ->where('id_ranking', $request->id_ranking)
             ->first();
 
-        if (!$ranking_student) {
-            return response()->json(['success' => false, 'message' => 'No se encontró el alumno en el ranking']);
-        }
-
         $ranking_student->validar = true;
         $ranking_student->update();
 
         return response()->json(['success' => true, 'message' => 'Alumno validado correctamente', 'ranking_student' => $ranking_student]);
     }
-
-
 
     /* FUNCIÓN KICKOFF: Está función sirve para eliminar a un alumno de un ranking. Para ello
        comprobará si el Usuario intentándolo es un profesor, después rellena el objeto Student
@@ -97,26 +89,17 @@ class Ranking_UserController extends Controller
     public function kickoff(Request $request)
     {
         $request->validate([
-            'id_alumno' => 'required',
-            'id_ranking' => 'required'
+            'id_ranking' => 'required|exists:ranking,id',
+            'id_user' => 'required|exists:user,id'
         ]);
-        
-        $user = $request->user();
 
-        if (isset($user->rol) && $user->rol == "profesor") {
+        $ranking_student = Ranking_User::where('id_user', $request->id_user)
+            ->where('id_ranking', $request->id_ranking)
+            ->first();
 
-            $student = User::where('id', $request->id_alumno)->first();
-            $ranking_student = Ranking_User::where('id_ranking', $request->id_ranking)->where('id_user', $student->id)->first();
+        $ranking_student->delete();
 
-            if ($ranking_student->delete()) {
-                return response()->json(['success' => true, 'message' => 'Alumno borrado correctamente']);
-            } else {
-                return response()->json(['success' => false, 'message' => 'No se pudo borrar al alumno']);
-            }
-            if (!$ranking_student) {
-                return response()->json(['success' => false, 'message' => 'No se encontró el alumno en el ranking']);
-            }
-        }
+        return response()->json(['success' => true, 'message' => 'Alumno borrado correctamente']);
     }
 
     /* */

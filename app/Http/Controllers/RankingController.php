@@ -30,7 +30,7 @@ class RankingController extends Controller
             $ranking->code = Str::random(10);
 
             // Si se ha subido una imagen, se guarda su contenido en la base de datos
-           /* if ($request->hasFile('img')) {
+            /* if ($request->hasFile('img')) {
                 $imagePath = $request->file('img')->getRealPath();
                 $image = file_get_contents($imagePath);
                 $ranking->img = $image;
@@ -38,9 +38,9 @@ class RankingController extends Controller
                 $defaultImage = file_get_contents(public_path('img/default.png'));
                 $ranking->img = $defaultImage;
             }
-              */ 
+              */
             $ranking->save();
-            
+
             return response()->json([
                 "status" => 1,
                 "msg" => "¡Ranking creado con éxito!",
@@ -56,7 +56,7 @@ class RankingController extends Controller
     public function delete(Request $request, $id)
     {
         $user = $request->user();
-        
+
         $ranking = Ranking::find($id);
 
         if (isset($ranking->owner) === $user->nick) {
@@ -86,10 +86,15 @@ class RankingController extends Controller
         return null;
     }
 
-    public function regenerateCode(Request $request, $id)
+    public function regenerateCode(Request $request)
     {
+
+        $request->validate([
+            'id' => 'required'
+        ]);
+
         $user = $request->user();
-        $ranking = Ranking::find($id);
+        $ranking = Ranking::find($request->id);
 
         if (isset($ranking->owner) === $user->nick) {
 

@@ -9,16 +9,17 @@ class Task_userController extends Controller
 
 {
 
-    public function insertTask(Request $request, $id_task)
+    public function insertTask(Request $request)
     {
         $request->validate([
-            'file' => 'required|file'
+            'file' => 'required|file',
+            'id_task' => 'required'
         ]);
 
         $user = $request->user();
 
         $task = new Task_user();
-        $task->id_task=$id_task;
+        $task->id_task = $request->id_task;
         $task->id_user = $user->id;
         $task->file = $request->file;
         $file = $request->file('file');
@@ -41,9 +42,14 @@ class Task_userController extends Controller
 
 
 
-    public function upload(Request $request, $id_task)
+    public function upload(Request $request)
     {
-        $task = Task_user::find($id_task);
+        $request->validate([
+            'id' => 'required',
+            'file' => 'required|file'
+        ]);
+
+        $task = Task_user::find($request->id_task);
 
         if ($request->user()->rol != 'alumno') {
             return response()->json([
@@ -51,10 +57,6 @@ class Task_userController extends Controller
                 'message' => 'Solo los alumnos pueden subir archivos a esta tarea'
             ]);
         }
-
-        $request->validate([
-            'file' => 'required|file'
-        ]);
 
         $file = $request->file('file');
         $contents = file_get_contents($file->path());
@@ -74,9 +76,12 @@ class Task_userController extends Controller
         ]);
     }
 
-    public function download(Request $request, $id)
+    public function download(Request $request)
     {
-        $task = Task_user::findOrFail($id);
+        $request->validate([
+            'id' => 'required'
+        ]);
+        $task = Task_user::findOrFail($request->id);
         $file = $task->file;
         $headers = [
             'Content-Type' => 'application/pdf',

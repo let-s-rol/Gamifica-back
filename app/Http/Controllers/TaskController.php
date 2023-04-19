@@ -8,15 +8,17 @@ use App\Models\Task;
 class TaskController extends Controller
 {
 
-    public function createTask(Request $request, $id_ranking, $ranking_name)
+    public function createTask(Request $request)
     {
         $request->validate([
+            'id_ranking' => 'required',
+            'ranking_name'=>'required',
             'name' => 'required',
             'sentence' => 'required'
         ]);
         $task = new Task();
-        $task->id_ranking = $id_ranking;
-        $task->ranking_name = $ranking_name;
+        $task->id_ranking = $request->id_ranking;
+        $task->ranking_name = $request->ranking_name;
         $task->name = $request->name;
         $task->sentence = $request->sentece;
         $task->save();
@@ -32,8 +34,11 @@ class TaskController extends Controller
         Task::where('id_ranking', $id_ranking)->delete();
     }
 
-    public function pickTaskByRanking(Request $request, $id_ranking)
+    public function pickTaskByRanking(Request $request)
     {
-        Task::where('id_ranking', $id_ranking)->get();
+        $request->validate([
+            'id_ranking' => 'required'
+        ]);
+        Task::where('id_ranking', $request->id_ranking)->get();
     }
 }
