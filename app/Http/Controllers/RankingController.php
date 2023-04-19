@@ -53,11 +53,15 @@ class RankingController extends Controller
         }
     }
 
-    public function delete(Request $request, $id)
+    public function delete(Request $request)
     {
+
+        $request->validate([
+            'id_ranking'=>'required'
+        ]);
         $user = $request->user();
 
-        $ranking = Ranking::find($id);
+        $ranking = Ranking::find($request->id_ranking);
 
         if (isset($ranking->owner) === $user->nick) {
 
