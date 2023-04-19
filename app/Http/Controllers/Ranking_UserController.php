@@ -21,82 +21,71 @@ class Ranking_UserController extends Controller
        Por último comprueba si se han guardado estos cambios y te lanza varios mensajes para ver
        si la operación ha sido exitosa, si ha fallado, y algunos de los motivos de fallo.*/
 
-       public function insert(Request $request)
-       {
-           $user = $request->user();
-           //$code = $request->query('code');
-       
-           $request->validate([
-               'code' => 'required'
-           ]);
-           $code = $request->code;
-       
-           // Buscamos el ranking correspondiente al código proporcionado
-           $ranking = Ranking::where('code', $code)->first();
-       
-           if (!$ranking) {
-               return response()->json(['success' => false, 'message' => 'No se encontró el ranking correspondiente']);
-           }
-       
-           // Validamos el código proporcionado con el código del ranking
-           if ($ranking->code != $code) {
-               return response()->json(['success' => false, 'message' => 'El código proporcionado no coincide con el código del ranking']);
-           }
-       
-           // Check if user is already in ranking
-           $existingUser = Ranking_User::where('id_user', $user->id)->where('id_ranking', $ranking->id)->first();
-           if ($existingUser) {
-               return response()->json(['success' => false, 'message' => 'Ya estás en este ranking']);
-           }
+    public function insert(Request $request)
+    {
+        $user = $request->user();
+        //$code = $request->query('code');
 
-           $id = $ranking->id; // Assign the ID of the ranking to $id
-       
-           $ranking_user = new Ranking_User();
-           $ranking_user->id_ranking = $id;
-           $ranking_user->id_user = $user->id;
-           $ranking_user->user_name = $user->nick;
-           $ranking_user->points = 0;
-           $ranking_user->validar = false;
-       
-           if ($ranking_user->save()) {
-       
-               return response()->json(['success' => true, 'message' => 'Has sido agregado, espera a que el profesor te valide dentro del ranking']);
-           }
-       
-           return response()->json(['success' => false, 'message' => 'No se pudo agregar el alumno al ranking']);
-       }
-       
-       
-       
-       public function validate_user(Request $request)
-       {
+        $request->validate([
+            'code' => 'required'
+        ]);
+        $code = $request->code;
 
-        $id_ranking = $request->input('id_ranking');
-        $id_user = $request->input('id_user');
+        // Buscamos el ranking correspondiente al código proporcionado
+        $ranking = Ranking::where('code', $code)->first();
+
+        if (!$ranking) {
+            return response()->json(['success' => false, 'message' => 'No se encontró el ranking correspondiente']);
+        }
+
+        // Validamos el código proporcionado con el código del ranking
+        if ($ranking->code != $code) {
+            return response()->json(['success' => false, 'message' => 'El código proporcionado no coincide con el código del ranking']);
+        }
+
+        // Check if user is already in ranking
+        $existingUser = Ranking_User::where('id_user', $user->id)->where('id_ranking', $ranking->id)->first();
+        if ($existingUser) {
+            return response()->json(['success' => false, 'message' => 'Ya estás en este ranking']);
+        }
+
+        $id = $ranking->id; // Assign the ID of the ranking to $id
+
+        $ranking_user = new Ranking_User();
+        $ranking_user->id_ranking = $id;
+        $ranking_user->id_user = $user->id;
+        $ranking_user->user_name = $user->nick;
+        $ranking_user->points = 0;
+        $ranking_user->validar = false;
+
+        if ($ranking_user->save()) {
+
+            return response()->json(['success' => true, 'message' => 'Has sido agregado, espera a que el profesor te valide dentro del ranking']);
+        }
+
+        return response()->json(['success' => false, 'message' => 'No se pudo agregar el alumno al ranking']);
+    }
 
 
-           $request->validate([
+
+    public function validate_user(Request $request)
+    {
+
+        $request->validate([
             'id_ranking' => 'required|exists:ranking,id',
             'id_user' => 'required|exists:user,id'
-               
-           ]);
 
-          // $ranking_student = Ranking_User::where('id_user', $request->id_user)
-           //->where('id_ranking', $request->id_ranking)
-           //->first();
+        ]);
 
-           //$ranking_student = Ranking_User::find([$request->id_user, $request->id_ranking]);
-           
-           $ranking_student = Ranking_User::where([ 
-               'id_ranking' => $request->id_ranking, 
-               'id_user' => $request->id_user
-           ])->first();
+        $ranking_student = Ranking_User::where('id_user', $request->id_user)
+            ->where('id_ranking', $request->id_ranking)
+            ->first();
 
-       
-           if (!$ranking_student) {
-               return response()->json(['success' => false, 'message' => 'No se encontró el alumno en el ranking']);
-           }
-       
+
+        if (!$ranking_student) {
+            return response()->json(['success' => false, 'message' => 'No se encontró el alumno en el ranking']);
+        }
+
         // $ranking_student->validar = true;
         // $ranking_student->save();
 
@@ -106,10 +95,10 @@ class Ranking_UserController extends Controller
         $ranking_student->save();
 
 
-       
-           return response()->json(['success' => true, 'message' => 'Alumno validado correctamente', 'ranking_student' => $ranking_student]);
-       }
-       
+
+        return response()->json(['success' => true, 'message' => 'Alumno validado correctamente', 'ranking_student' => $ranking_student]);
+    }
+
 
 
     /* FUNCIÓN KICKOFF: Está función sirve para eliminar a un alumno de un ranking. Para ello
