@@ -8,17 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Ranking_User extends Model
 {
     use HasFactory;
-
     protected $table = 'ranking_user';
-
-    protected $primaryKey = ['id_ranking', 'id_user'];
 
     protected $fillable = [
         'id_user',
         'id_ranking',
         'user_name',
         'points',
-        'validar',
+        'validar'
     ];
 
     public $incrementing = false;

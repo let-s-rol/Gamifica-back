@@ -70,17 +70,14 @@ class Ranking_UserController extends Controller
 
     public function validate_user(Request $request)
     {
-
         $request->validate([
             'id_ranking' => 'required|exists:ranking,id',
             'id_user' => 'required|exists:user,id'
-
         ]);
 
         $ranking_student = Ranking_User::where('id_user', $request->id_user)
             ->where('id_ranking', $request->id_ranking)
             ->first();
-
 
         if (!$ranking_student) {
             return response()->json(['success' => false, 'message' => 'No se encontró el alumno en el ranking']);
@@ -103,6 +100,7 @@ class Ranking_UserController extends Controller
             'id_alumno' => 'required',
             'id_ranking' => 'required'
         ]);
+        
         $user = $request->user();
 
         if (isset($user->rol) && $user->rol == "profesor") {
