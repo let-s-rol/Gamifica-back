@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('ranking_user', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('id_ranking');
             $table->unsignedBigInteger('id_user');
             $table->string('user_name');
@@ -20,9 +21,7 @@ return new class extends Migration
 
             $table->foreign('id_ranking')->references('id')->on('ranking')->onDelete('cascade');
             $table->foreign('id_user')->references('id')->on('user');
-
-            // add a composite primary key
-            $table->primary(['id_ranking', 'id_user']);
+            $table->unique(['id_ranking', 'id_user']); // Restricción de clave única mixta
 
             $table->timestamps();
         });
