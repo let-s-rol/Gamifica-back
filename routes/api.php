@@ -42,8 +42,8 @@ Route::group(['middleware' => ["auth:sanctum"]], function () {
 
     //TASKS
     Route::post('createTask', [TaskController::class, 'createTask']);
-    Route::get('pickTaskByRanking', [TaskController::class, 'pickTaskByRanking']);
-    Route::delete('deleteTaskByRanking', [TaskController::class, 'deleteTaskByRanking']);
+    Route::get('pickTask', [TaskController::class, 'pickTaskByRanking']);
+    Route::delete('deleteTask', [TaskController::class, 'deleteTaskByRanking']);
 
     //TASK_USER
     Route::post('tasks/{id_task}/insert', [Task_userController::class, 'insertTask']);
