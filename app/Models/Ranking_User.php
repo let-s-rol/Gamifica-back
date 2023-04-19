@@ -10,7 +10,14 @@ class Ranking_User extends Model
     use HasFactory;
 
     public $table = "ranking_user";
-    protected $primaryKey = 'id_user';
+    //protected $primaryKey = "id_user";
+    protected $primaryKey = ['id_ranking', 'id_user'];
+    //protected $primaryKey = array('id_user', 'id_ranking');
+    //protected $primaryKey = 'id_ranking,id_user';
+
+   // protected $primaryKey = 'id_user:id_ranking';
+    //protected $primaryKey = "id_user";
+    public $incrementing = false;
 
      /**
      * The attributes that are mass assignable.
@@ -18,8 +25,12 @@ class Ranking_User extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'user',
+        'id_user',
+        'id_ranking',
+        'user_name',
         'points',
         'validar'
     ];
+
+
 }

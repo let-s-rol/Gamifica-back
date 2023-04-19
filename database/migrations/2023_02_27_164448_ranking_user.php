@@ -20,6 +20,10 @@ return new class extends Migration
 
             $table->foreign('id_ranking')->references('id')->on('ranking')->onDelete('cascade');
             $table->foreign('id_user')->references('id')->on('user');
+
+            // add a composite primary key
+            $table->primary(['id_ranking', 'id_user']);
+
             $table->timestamps();
         });
     }
