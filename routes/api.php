@@ -30,7 +30,7 @@ Route::group(['middleware' => ["auth:sanctum"]], function () {
     Route::post('create_ranking', [RankingController::class, 'create']);
     Route::delete('delete_ranking', [RankingController::class, 'delete']);
     Route::get('show_rankings', [RankingController::class, 'show_rankings']);
-    Route::post('regenerate_code/{ranking_id}', [RankingController::class, 'regenerateCode']);
+    Route::post('regenerate_code', [RankingController::class, 'regenerateCode']);
 
     //RANKING_USER
     Route::post('access_ranking/', [Ranking_UserController::class, 'insert']);

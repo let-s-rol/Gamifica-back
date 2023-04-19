@@ -57,24 +57,16 @@ class RankingController extends Controller
     {
 
         $request->validate([
-            'id_ranking'=>'required'
+            'id_ranking' => 'required'
         ]);
         $user = $request->user();
 
         $ranking = Ranking::find($request->id_ranking);
+        $ranking->delete();
 
-        if (isset($ranking->owner) === $user->nick) {
-
-            $ranking->delete();
-
-            return response()->json([
-                "status" => 1,
-                "msg" => "Ranking eliminado con éxito",
-            ]);
-        }
         return response()->json([
-            "status" => 0,
-            "msg" => "Han habido un error",
+            "status" => 1,
+            "msg" => "Ranking eliminado con éxito",
         ]);
     }
 
