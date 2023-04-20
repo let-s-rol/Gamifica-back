@@ -46,11 +46,11 @@ Route::group(['middleware' => ["auth:sanctum"]], function () {
     Route::delete('deleteTask', [TaskController::class, 'deleteTaskByRanking']);
 
     //TASK_USER
-    Route::post('tasks/{id_task}/insert', [Task_userController::class, 'insertTask']);
-    Route::post('tasks/{id_task}/upload', [Task_userController::class, 'upload']);
-    Route::get('tasks/{id_task}/download', [Task_userController::class, 'download']);
+    Route::post('tasks/insert', [Task_userController::class, 'insertTask']);
+    Route::post('tasks/upload', [Task_userController::class, 'upload']);
+    Route::get('tasks/download', [Task_userController::class, 'download']);
     Route::get('tasks', [Task_userController::class, 'showTaskByUser']);
-    Route::delete('tasks/{id_task}/delete', [Task_userController::class, 'delete']);
+    Route::delete('tasks/delete', [Task_userController::class, 'delete']);
 });
 
 //GET http://127.0.0.1:8000/api/user postman, devuelve el usuario logeado actual
