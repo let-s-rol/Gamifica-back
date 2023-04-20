@@ -57,11 +57,11 @@ class RankingController extends Controller
     {
 
         $request->validate([
-            'id_ranking' => 'required'
+            'id' => 'required'
         ]);
         $user = $request->user();
 
-        $ranking = Ranking::find($request->id_ranking);
+        $ranking = Ranking::find($request->id);
         $ranking->delete();
 
         return response()->json([
