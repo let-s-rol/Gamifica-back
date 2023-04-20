@@ -146,7 +146,7 @@ class Ranking_UserController extends Controller
         ]);
         $ranking = Ranking_User::where('id_ranking', $request->id); //se obtiene ranking deseado
         $students = $ranking
-            ->orderBy('points', 'desc')
+            ->orderBy('points', 'desc') -> where('validar',true)
             ->get();
 
         return response()->json($students);
