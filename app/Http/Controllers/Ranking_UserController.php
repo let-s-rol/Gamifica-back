@@ -109,7 +109,7 @@ class Ranking_UserController extends Controller
             return response()->json(['success' => false, 'message' => 'No se encontró el alumno en el ranking']);
         }
 
-
+        
         $ranking_student->delete();
 
         return response()->json(['success' => true, 'message' => 'Alumno borrado correctamente']);
@@ -142,13 +142,11 @@ class Ranking_UserController extends Controller
     {
 
         $request->validate([
-            'id_ranking' => 'required'
+            'id' => 'required'
         ]);
-        $ranking = Ranking_User::find($request->id_ranking); //se obtiene ranking deseado
+        $ranking = Ranking_User::find($request->id); //se obtiene ranking deseado
         $students = $ranking->users()
             ->where('rol', 'student')
-            ->join('ranking_user', 'users.id', '=', 'ranking_user.id_user')
-            ->orderBy('ranking_user.points', 'desc')
             ->get();
 
         return response()->json($students);
