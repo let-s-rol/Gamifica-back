@@ -11,7 +11,7 @@ return new class extends Migration
     {
         Schema::create('ranking', function (Blueprint $table) {
             $table->id();
-            $table->string('ranking_name');
+            $table->string('ranking_name')->unique();
             $table->string('owner');
             $table->string('img')->nullable();
             $table->string('code')->unique();
