@@ -20,7 +20,7 @@ class TaskController extends Controller
         $task->id_ranking = $request->id_ranking;
         $task->ranking_name = $request->ranking_name;
         $task->name = $request->name;
-        $task->sentence = $request->sentece;
+        $task->sentence = $request->sentence;
         $task->save();
 
         return response()->json([
