@@ -145,7 +145,7 @@ class Ranking_UserController extends Controller
             'id' => 'required'
         ]);
         $ranking = Ranking_User::find($request->id); //se obtiene ranking deseado
-        $students = $ranking->users()
+        $students = $ranking->user()
             ->where('rol', 'student')
             ->get();
 
