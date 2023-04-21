@@ -35,7 +35,7 @@ class UserController extends Controller
             $image = file_get_contents($imagePath);
             $user->img = base64_encode($image);
         } else {
-            $defaultImage = file_get_contents(public_path('img/default.png'));
+            $defaultImage = file_get_contents(public_path('public\images\default.png'));
             $user->img = base64_encode($defaultImage);
         }
 
