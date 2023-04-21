@@ -24,7 +24,6 @@ class Ranking_UserController extends Controller
     public function insert(Request $request)
     {
         $user = $request->user();
-        //$code = $request->query('code');
 
         $request->validate([
             'code' => 'required'

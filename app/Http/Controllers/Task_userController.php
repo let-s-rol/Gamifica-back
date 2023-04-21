@@ -105,18 +105,15 @@ class Task_userController extends Controller
     {
 
         $request->validate([
-            'id_alumno' => 'required',
-            'id_task' => 'required',
-            'id_' => 'required',
+            'id' => 'required',
             'points' => 'required'
         ]);
 
         $user = $request->user();
 
-        $student = User::where('id', $request->id_alumno)->first();
-        $ranking_student = Ranking_User::where('id_ranking', $request->id_ranking)->where('id_user', $student->id)->first();
-        $ranking_student->points = $request->points;
+        $task = Task_user::where('id', $request->id)->first();
+        $task->points = $request->points;
 
-        $ranking_student->update();
+        $task->update();
     }
 }
