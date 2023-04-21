@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Task_user;
+use App\Models\User;
 
 class Task_userController extends Controller
 
@@ -99,5 +100,23 @@ class Task_userController extends Controller
             'message' => 'Tareas del usuario',
             'data' => $tasks
         ]);
+    }
+    public function Correct(Request $request)
+    {
+
+        $request->validate([
+            'id_alumno' => 'required',
+            'id_task' => 'required',
+            'id_' => 'required',
+            'points' => 'required'
+        ]);
+
+        $user = $request->user();
+
+        $student = User::where('id', $request->id_alumno)->first();
+        $ranking_student = Ranking_User::where('id_ranking', $request->id_ranking)->where('id_user', $student->id)->first();
+        $ranking_student->points = $request->points;
+
+        $ranking_student->update();
     }
 }

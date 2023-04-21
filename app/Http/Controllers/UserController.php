@@ -30,7 +30,14 @@ class UserController extends Controller
         $user->lastname = $request->lastname;
         $user->school = $request->school;
         $user->date = $request->date;
-        $user->img = 'public/images/default.png';
+        if ($request->hasFile('img')) {
+            $imagePath = $request->file('img')->getRealPath();
+            $image = file_get_contents($imagePath);
+            $user->img = $image;
+        } else {
+            $defaultImage = file_get_contents(public_path('img/default.png'));
+            $user->img = $defaultImage;
+        }
 
 
         if (isset($user->school)) {
