@@ -90,7 +90,6 @@ class Ranking_UserController extends Controller
     }
 
 
-
     /* FUNCIÓN KICKOFF: Está función sirve para eliminar a un alumno de un ranking. Para ello
        comprobará si el Usuario intentándolo es un profesor, después rellena el objeto Student
        con los datos del alumno...*/
@@ -109,7 +108,6 @@ class Ranking_UserController extends Controller
             return response()->json(['success' => false, 'message' => 'No se encontró el alumno en el ranking']);
         }
 
-
         $ranking_student->delete();
 
         return response()->json(['success' => true, 'message' => 'Alumno borrado correctamente']);
@@ -120,22 +118,17 @@ class Ranking_UserController extends Controller
 
         $request->validate([
             'id_alumno' => 'required',
-            'id_ranking' => 'required'
+            'id_ranking' => 'required',
+            'points' => 'required'
         ]);
 
         $user = $request->user();
 
-        if (isset($user->rol) && $user->rol == "profesor") {
+        $student = User::where('id', $request->id_alumno)->first();
+        $ranking_student = Ranking_User::where('id_ranking', $request->id_ranking)->where('id_user', $student->id)->first();
+        $ranking_student->points = $request->points;
 
-            $request->validate([
-                'points' => 'required'
-            ]);
-            $student = User::where('id', $request->id_alumno)->first();
-            $ranking_student = Ranking_User::where('id_ranking', $request->id_ranking)->where('id_user', $student->id)->first();
-            $ranking_student->points = $request->points;
-
-            $ranking_student->update();
-        }
+        $ranking_student->update();
     }
 
     public function show_students(Request $request)

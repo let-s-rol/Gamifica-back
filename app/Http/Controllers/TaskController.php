@@ -12,7 +12,7 @@ class TaskController extends Controller
     {
         $request->validate([
             'id_ranking' => 'required',
-            'ranking_name'=>'required',
+            'ranking_name' => 'required',
             'name' => 'required',
             'sentence' => 'required'
         ]);
@@ -32,9 +32,18 @@ class TaskController extends Controller
     public function deleteTaskByRanking(Request $request)
     {
         $request->validate([
+            'id' => 'required',
             'id_ranking' => 'required'
         ]);
-        Task::where('id_ranking', $request->id_ranking)->delete();
+        if (Task::where('id_ranking', $request->id_ranking)
+            ->where('id', $request->id)
+            ->delete()
+        ) {
+
+            return response()->json(['message' => 'Tarea eliminada correctamente.']);
+        }
+
+        return response()->json(['message' => 'No se encontró ninguna tarea para eliminar.']);
     }
 
     public function pickTaskByRanking(Request $request)
@@ -43,5 +52,18 @@ class TaskController extends Controller
             'id_ranking' => 'required'
         ]);
         Task::where('id_ranking', $request->id_ranking)->get();
+    }
+
+    public function show_tasks(Request $request)
+    {
+
+        $request->validate([
+            'id' => 'required'
+        ]);
+        $task = Task::where('id_ranking', $request->id); //se obtiene task deseado
+        $task = $task
+            ->get();
+
+        return response()->json($task);
     }
 }
