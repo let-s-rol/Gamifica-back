@@ -13,7 +13,7 @@ return new class extends Migration
             $table->id();
             $table->string('ranking_name')->unique();
             $table->string('owner');
-            $table->string('img')->nullable();
+            $table->binary('img')->nullable();
             $table->string('code')->unique();
             
             $table->foreign('owner')->references('nick')->on('user');

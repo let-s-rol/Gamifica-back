@@ -37,7 +37,7 @@ class RankingController extends Controller
                 $defaultImage = file_get_contents(public_path('img/default.png'));
                 $ranking->img = $defaultImage;
             }
-              
+
             $ranking->save();
 
             return response()->json([
@@ -95,7 +95,7 @@ class RankingController extends Controller
 
             $new_code = Str::random(10);
             $ranking->code = $new_code;
-            $ranking->save();
+            $ranking->update();
 
             return response()->json([
                 "status" => 1,

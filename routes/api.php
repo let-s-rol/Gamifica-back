@@ -24,17 +24,18 @@ Route::post('login', [UserController::class, 'login']);
 
 Route::group(['middleware' => ["auth:sanctum"]], function () {
 
+    Route::post('update_profile_picture', [UserController::class, 'updateProfilePicture']);
     Route::delete('logout', [UserController::class, 'logout']);
 
     //RANKING
     Route::post('create_ranking', [RankingController::class, 'create']);
     Route::delete('delete_ranking', [RankingController::class, 'delete']);
     Route::get('show_rankings', [RankingController::class, 'show_rankings']);
-    Route::post('regenerate_code', [RankingController::class, 'regenerateCode']);
+    Route::post('regenerate_code', [RankingController::class, 'regenerateCode']); //
 
     //RANKING_USER
-    Route::post('access_ranking/', [Ranking_UserController::class, 'insert']);
-    Route::post('update_points', [Ranking_UserController::class, 'update_points']);
+    Route::post('access_ranking', [Ranking_UserController::class, 'insert']);
+    Route::post('update_points', [Ranking_UserController::class, 'update_points']); //
     Route::get('show_students', [Ranking_UserController::class, 'show_students']);
     Route::get('show_pending_users', [Ranking_UserController::class, 'show_pending_users']);
     Route::put('validate_student', [Ranking_UserController::class, 'validate_user']);
@@ -42,7 +43,7 @@ Route::group(['middleware' => ["auth:sanctum"]], function () {
 
     //TASKS
     Route::post('createTask', [TaskController::class, 'createTask']);
-    Route::get('pickTask', [TaskController::class, 'pickTaskByRanking']);
+    Route::get('pickTask', [TaskController::class, 'pickTaskByRanking']); //
     Route::delete('deleteRankingTask', [TaskController::class, 'deleteTaskByRanking']);
     Route::get('ShowTasks', [TaskController::class, 'show_tasks']);
 

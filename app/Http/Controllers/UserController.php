@@ -10,8 +10,6 @@ class UserController extends Controller
 {
     public function register(Request $request)
     {
-
-       
         $request->validate([
             'name' => 'required',
             'lastname' => 'required',
@@ -19,7 +17,8 @@ class UserController extends Controller
             'email' => 'required | email | unique:User',
             'password' => 'required',
             'school' => 'nullable',
-            'date' => 'nullable'
+            'date' => 'nullable',
+            'img' => 'nullable|image'
         ]);
 
         $user = new User();
@@ -30,15 +29,15 @@ class UserController extends Controller
         $user->lastname = $request->lastname;
         $user->school = $request->school;
         $user->date = $request->date;
+
         if ($request->hasFile('img')) {
             $imagePath = $request->file('img')->getRealPath();
             $image = file_get_contents($imagePath);
-            $user->img = $image;
+            $user->img = base64_encode($image);
         } else {
             $defaultImage = file_get_contents(public_path('img/default.png'));
-            $user->img = $defaultImage;
+            $user->img = base64_encode($defaultImage);
         }
-
 
         if (isset($user->school)) {
             $user->rol = "teacher";
@@ -105,6 +104,29 @@ class UserController extends Controller
         $user = $request->user();
         return response()->json($user);
     }
+    public function updateProfilePicture(Request $request)
+    {
+        $request->validate([
+            'img' => 'required|image'
+        ]);
 
+        $user = $request->user();
 
+        if ($request->hasFile('img')) {
+            $imagePath = $request->file('img')->getRealPath();
+            $image = file_get_contents($imagePath);
+            $user->img = $image;
+            $user->save();
+
+            return response()->json([
+                'status' => 1,
+                'msg' => 'Imagen de perfil actualizada exitosamente'
+            ]);
+        } else {
+            return response()->json([
+                'status' => 0,
+                'msg' => 'No se ha seleccionado ninguna imagen'
+            ], 400);
+        }
+    }
 }

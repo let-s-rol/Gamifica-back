@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('school')->nullable();
             $table->date('date')->nullable();
             $table->string('rol');
-            $table->string('img');
+            $table->binary('img')->nullable();
             
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
