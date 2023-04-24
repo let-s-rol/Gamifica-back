@@ -29,14 +29,7 @@ class RankingController extends Controller
             $ranking->owner = $user->nick;
             $ranking->code = Str::random(10);
 
-            if ($request->hasFile('img')) {
-                $imagePath = $request->file('img')->getRealPath();
-                $image = file_get_contents($imagePath);
-                $ranking->img = $image;
-            } else {
-                $defaultImage = file_get_contents(public_path('img/default.png'));
-                $ranking->img = $defaultImage;
-            }
+        
 
             $ranking->save();
 
