@@ -52,6 +52,8 @@ class TaskController extends Controller
             'id_ranking' => 'required'
         ]);
         Task::where('id_ranking', $request->id_ranking)->get();
+
+        return response()->json(['success' => true]);
     }
 
     public function show_tasks(Request $request)
