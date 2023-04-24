@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Task_user;
+use App\Models\Ranking_User;
 use App\Models\User;
 
 class Task_userController extends Controller
@@ -103,17 +104,19 @@ class Task_userController extends Controller
     }
     public function Correct(Request $request)
     {
-
         $request->validate([
             'id' => 'required',
             'points' => 'required'
         ]);
 
-        $user = $request->user();
-
-        $task = Task_user::where('id', $request->id)->first();
+        $task = Task_user::findOrFail($request->id);
         $task->points = $request->points;
-
         $task->update();
+
+        $student = Ranking_User::where('user_id', $task->user_id)->first();
+        $student->points += $request->points;
+        $student->update();
+
+        return response()->json(['success' => true]);
     }
 }
