@@ -29,7 +29,7 @@ class RankingController extends Controller
             $ranking->owner = $user->nick;
             $ranking->code = Str::random(10);
 
-        
+
 
             $ranking->save();
 
@@ -73,6 +73,15 @@ class RankingController extends Controller
         }
         return null;
     }
+
+    public function show_rankings_students(Request $request)
+    {
+        $user = $request->user();
+        $rankings = $user->rankings;
+
+        return response()->json($rankings);
+    }
+
 
     public function regenerateCode(Request $request)
     {
