@@ -50,4 +50,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function rankings()
+    {
+        return $this->belongsToMany(Ranking::class, 'ranking_user', 'id_user', 'id_ranking')->withPivot('user_name', 'points', 'validar');
+    }
 }
