@@ -77,7 +77,7 @@ class RankingController extends Controller
     public function show_rankings_students(Request $request)
     {
         $user = $request->user();
-        $rankings = $user->rankings;
+        $rankings = $user->rankings->wherePivot('validar', true)->get();
 
         return response()->json($rankings);
     }
