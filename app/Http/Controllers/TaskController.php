@@ -33,10 +33,10 @@ class TaskController extends Controller
     {
         $request->validate([
             'id' => 'required',
-            'id_ranking' => 'required'
+            //'id_ranking' => 'required'
         ]);
-        if (Task::where('id_ranking', $request->id_ranking)
-            ->where('id', $request->id)
+        if (Task:://where('id_ranking', $request->id_ranking)
+            where('id', $request->id)
             ->delete()
         ) {
 
@@ -52,8 +52,6 @@ class TaskController extends Controller
             'id_ranking' => 'required'
         ]);
         Task::where('id_ranking', $request->id_ranking)->get();
-
-        return response()->json(['success' => true]);
     }
 
     public function show_tasks(Request $request)
