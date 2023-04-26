@@ -22,6 +22,9 @@ use App\Http\Controllers\TaskController;
 Route::post('register', [UserController::class, 'register']);
 Route::post('login', [UserController::class, 'login']);
 
+Route::post('pdf/upload', [Task_userController::class, 'uploadPdf']); //XXX bryan mira esto
+
+
 Route::group(['middleware' => ["auth:sanctum"]], function () {
 
     Route::post('update_profile_picture', [UserController::class, 'updateProfilePicture']);
