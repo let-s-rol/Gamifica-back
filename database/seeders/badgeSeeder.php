@@ -21,35 +21,37 @@ class badgeSeeder extends Seeder
                 'img_url' => null
             ],
             [
-                'name' => 'Cooperación',
+                'name' => 'Cooperacion',
                 'level' => 0,
                 'max_points' => 1000,
                 'img_url' => null
             ],
             [
-                'name' => 'Autonomía e Iniciativa',
+                'name' => 'Iniciativa',
                 'level' => 0,
                 'max_points' => 1000,
                 'img_url' => null
             ],
             [
-                'name' => 'Gestión Emocional',
+                'name' => 'Emocional',
                 'level' => 0,
                 'max_points' => 1000,
                 'img_url' => null
             ],
             [
-                'name' => '',
+                'name' => 'Pensamiento',
                 'level' => 0,
                 'max_points' => 1000,
                 'img_url' => null
             ]
         ];
 
+        $points_per_level = [0, 1000, 2000, 4000, 7000, 10000]; // nivel 0 al 5
+
         foreach ($stats_cartas as $medalla) {
-            for ($i = 1; $i <= 5; $i++) {
+            for ($i = 0; $i <= 5; $i++) {
                 $nivel = $i;
-                $max_points = 1000 * $nivel;
+                $max_points = $points_per_level[$nivel];
                 $medalla['max_points'] = $max_points;
                 $medalla['level'] = $nivel;
                 $medalla['img_url'] = $nivel > 0 ? "/assets/medals/{$medalla['name']}$nivel.png" : null;
