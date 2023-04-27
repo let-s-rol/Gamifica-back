@@ -30,14 +30,14 @@ class UserController extends Controller
         $user->school = $request->school;
         $user->date = $request->date;
 
-        if ($request->hasFile('img')) {
-            $imagePath = $request->file('img')->getRealPath();
-            $image = file_get_contents($imagePath);
-            $user->img = base64_encode($image);
-        } else {
-            $defaultImage = file_get_contents('D:\Gamifica-back\public\images\default.png');
-            $user->img = base64_encode($defaultImage);
-        }
+         if ($request->hasFile('img')) {
+             $imagePath = $request->file('img')->getRealPath();
+             $image = file_get_contents($imagePath);
+             $user->img = base64_encode($image);
+         } else {
+            $defaultImage = file_get_contents(public_path('images/default.png'));
+             $user->img = base64_encode($defaultImage);
+         }
 
         if (isset($user->school)) {
             $user->rol = "teacher";
