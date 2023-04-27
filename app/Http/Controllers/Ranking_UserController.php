@@ -130,13 +130,9 @@ class Ranking_UserController extends Controller
         $ranking_student->update();
     }
 
-    public function show_students(Request $request)
+    public function show_students(Request $request, $id)
     {
-
-        $request->validate([
-            'id' => 'required'
-        ]);
-        $ranking = Ranking_User::where('id_ranking', $request->id); //se obtiene ranking deseado
+        $ranking = Ranking_User::where('id_ranking', $id); //se obtiene ranking deseado
         $students = $ranking
             ->orderBy('points', 'desc')->where('validar', true)
             ->get();

@@ -41,7 +41,7 @@ Route::group(['middleware' => ["auth:sanctum"]], function () {
     //RANKING_USER
     Route::post('access_ranking', [Ranking_UserController::class, 'insert']);
     Route::post('update_points', [Ranking_UserController::class, 'update_points']); //
-    Route::get('show_students', [Ranking_UserController::class, 'show_students']);
+    Route::get('show_students', [Ranking_UserController::class, 'show_students']); //añadir parametro de id del ranking en url
     Route::get('show_pending_users', [Ranking_UserController::class, 'show_pending_users']);
     Route::put('validate_student', [Ranking_UserController::class, 'validate_user']);
     Route::delete('kick_student', [Ranking_UserController::class, 'kickoff']);
@@ -56,7 +56,7 @@ Route::group(['middleware' => ["auth:sanctum"]], function () {
     Route::post('tasks/insert', [Task_userController::class, 'insertTask']);
     Route::post('tasks/upload', [Task_userController::class, 'upload']);
     Route::get('tasks/download', [Task_userController::class, 'download']);
-    Route::get('tasks', [Task_userController::class, 'showTaskByUser']);
+    Route::get('tasks', [Task_userController::class, 'showTaskByUser']); //id 
     Route::delete('tasks/delete', [Task_userController::class, 'delete']);
 });
 
