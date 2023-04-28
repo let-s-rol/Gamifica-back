@@ -10,7 +10,7 @@ use App\Models\User;
 class Task_userController extends Controller
 
 {
-    public function uploadPdf(Request $request) //xxx mira esti
+    public function uploadPdf(Request $request) //xxx mira esto
     {
         
         $request->validate([
