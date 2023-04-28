@@ -10,20 +10,26 @@ use App\Models\User;
 class Task_userController extends Controller
 
 {
-    public function uploadPdf(Request $request) //XXX mira esti 
+    public function uploadPdf(Request $request) //xxx mira esti
     {
-      $base64 = $request->input('pdf');
-      $contents = base64_decode($base64);
-    
-      $user = $request->user();
-    
-      $task = new Task_user();
-      $task->id_task = $request->id_task;
-      $task->id_user = $user->id;
-      $task->file = $contents;
-      $task->save();
-    
-      return response()->json(['message' => 'Archivo recibido con éxito']);
+        return response()->json(["hello world"]);
+        $request->validate([
+            'pdf' => 'required',
+            'id_task' => 'required'
+        ]);
+
+        $base64 = $request->input('pdf');
+        $contents = base64_decode($base64);
+
+        $user = $request->user();
+
+        $task = new Task_user();
+        $task->id_task = $request->id_task;
+        $task->id_user = $user->id;
+        $task->file = $contents;
+        $task->save();
+
+        return response()->json(['message' => 'Archivo recibido con éxito']);
     }
 
     public function insertTask(Request $request)

@@ -22,7 +22,6 @@ use App\Http\Controllers\TaskController;
 Route::post('register', [UserController::class, 'register']);
 Route::post('login', [UserController::class, 'login']);
 
-Route::post('pdf/upload', [Task_userController::class, 'uploadPdf']); //XXX bryan mira esto
 
 
 Route::group(['middleware' => ["auth:sanctum"]], function () {
@@ -47,6 +46,8 @@ Route::group(['middleware' => ["auth:sanctum"]], function () {
     Route::delete('kick_student', [Ranking_UserController::class, 'kickoff']);
 
     //TASKS
+    Route::post('pdf/upload', [Task_userController::class, 'uploadPdf']); //XXX bryan mira esto
+
     Route::post('createTask', [TaskController::class, 'createTask']);
     Route::get('pickTask', [TaskController::class, 'pickTaskByRanking']); //
     Route::delete('deleteRankingTask', [TaskController::class, 'deleteTaskByRanking']);
