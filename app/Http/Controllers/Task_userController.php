@@ -10,9 +10,9 @@ use App\Models\User;
 class Task_userController extends Controller
 
 {
-    public function uploadPdf(Request $request) //xxx mira esti
+    public function uploadPdf(Request $request) //xxx mira esto
     {
-        return response()->json(["hello world"]);
+        // return response()->json(["hello world"]);
         $request->validate([
             'pdf' => 'required',
             'id_task' => 'required'
