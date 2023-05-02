@@ -30,40 +30,31 @@ class Badges_User extends Model
         return $this->belongsTo(User::class, 'id_user');
     }
 
+    public function ranking()
+    {
+        return $this->belongsTo(Ranking::class, 'id_ranking');
+    }
+
     public function getImageUrl(): string
     {
         $level = $this->level > 0 ? $this->level : 1; // si el nivel es 0, la imagen es la de nivel 1
         return "/assets/medals/{$this->name}{$level}.png";
     }
 
-    function max_experience2($badge, $experience) {
+    function max_experience($id_badge, $experience)
+    {
         $points_per_level = [0, 1000, 2000, 4000, 7000, 10000];
-        $level = $badge->level;
-        $max_points = $badge->max_points;
-    
+        $level = 0;
+        $max_points = $points_per_level[$level];
+
         while ($experience >= $max_points && $level < 5) {
             $level++;
             $max_points = $points_per_level[$level];
-            $badge->update(['level' => $level, 'max_points' => $max_points]);
         }
-    
-        return $max_points;
-    }
 
-    public function max_experience($experience) {
-        $max_experience = $this->max_points;
-        if ($experience >= $max_experience) {
-            $this->experience = $max_experience;
-            $current_image = $this->img_url;
-            $new_experience = $this->experience;
-            $new_level = $this->getLevelFromExperience($new_experience);
-            if ($new_level !== $this->level) {
-                $this->level = $new_level;
-                $this->img_url = "/assets/medals/{$this->name}{$new_level}.png";
-            }
-        } else {
-            $this->experience = $experience;
-        }
+        $id_badge = $id_badge + $level;
+
+
+        return $id_badge;
     }
-    
 }
