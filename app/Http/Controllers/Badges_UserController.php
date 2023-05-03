@@ -28,53 +28,61 @@ class Badges_UserController extends Controller
             'Puntos_Pensamiento' => 'nullable'
         ]);
 
-        switch ($badges) {
-            case $badges['Responsabilidad']:
-                $badge1 = new Badges_User();
-                $badge1->id_user=$user->id;
-                $badge1->id_ranking = $badges['id_ranking'];
-                break;
-            case $badges['Cooperacion']:
-                $badge2 = new Badges_User();
-                $badge2->id_user=$user->id;
-                $badge2->id_ranking = $badges['id_ranking'];
-                break;
-            case $badges['Iniciativa']:
-                $badge3 = new Badges_User();
-                $badge3->id_user=$user->id;
-                $badge3->id_ranking = $badges['id_ranking'];
-                break;
-            case $badges['Emocional']:
-                $badge4 = new Badges_User();
-                $badge4->id_user=$user->id;
-                $badge4->id_ranking = $badges['id_ranking'];
-                break;
-            case $badges['Pensamiento']:
-                $badge5 = new Badges_User();
-                $badge5->id_user=$user->id;
-                $badge5->id_ranking = $badges['id_ranking'];
+        $badges_user = Badges_User::where('id_user', $user->id)
+            ->where('id_ranking', $request->input('id_ranking'))
+            ->get();
 
-                break;
+        if ($badges_user->isNotEmpty()) {
+
+            foreach ($badges_user as $badge) {
+                $new_badge_id = $badge->max_experience($badge->id_badge, $badge->experience);
+                if ($new_badge_id != $badge->id_badge) {
+                    $badge->id_badge = $new_badge_id;
+                    $badge->update();
+                }
+            }
+        }
+
+        if (isset($badges['Responsabilidad'])) {
+            $badge1 = new Badges_User();
+            $badge1->id_user = $user->id;
+            $badge1->id_ranking = $badges['id_ranking'];
+            $badge1->id_badge = $badge1->max_experience(1, $badges['Puntos_Responsabilidad']);
+            $badge1->experience = $badges['Puntos_Responsabilidad'];
+            $badge1->save();
+        }
+
+        if (isset($badges['Cooperacion'])) {
+            $badge2 = new Badges_User();
+            $badge2->id_user = $user->id;
+            $badge2->id_ranking = $badges['id_ranking'];
+            $badge2->id_badge = $badge2->max_experience(6, $badges['Puntos_Cooperacion']);
+            $badge2->experience = $badges['Puntos_Cooperacion'];
+            $badge2->save();
+        }
+        if (isset($badges['Iniciativa'])) {
+            $badge3 = new Badges_User();
+            $badge3->id_user = $user->id;
+            $badge3->id_ranking = $badges['id_ranking'];
+            $badge3->id_badge = $badge3->max_experience(11, $badges['Puntos_Iniciativa']);
+            $badge3->experience = $badges['Puntos_Iniciativa'];
+            $badge3->save();
+        }
+        if (isset($badges['Emocional'])) {
+            $badge4 = new Badges_User();
+            $badge4->id_user = $user->id;
+            $badge4->id_ranking = $badges['id_ranking'];
+            $badge4->id_badge = $badge4->max_experience(16, $badges['Puntos_Emocional']);
+            $badge4->experience = $badges['Puntos_Emocional'];
+            $badge4->save();
+        }
+        if (isset($badges['Pensamiento'])) {
+            $badge5 = new Badges_User();
+            $badge5->id_user = $user->id;
+            $badge5->id_ranking = $badges['id_ranking'];
+            $badge5->id_badge = $badge5->max_experience(21, $badges['Puntos_Pensamiento']);
+            $badge5->experience = $badges['Puntos_Pensamiento'];
+            $badge5->save();
         }
     }
 }
-
-
-// Responsabilidad: 1 (nivel 0)
-// Cooperacion: 6 (nivel 0)
-// Iniciativa: 11 (nivel 0)
-// Emocional: 16 (nivel 0)
-// Pensamiento: 21 (nivel 0)
-
-// Schema::create('badges_user', function (Blueprint $table) {
-//     $table->id();
-//     $table->unsignedBigInteger('id_badge');
-//     $table->unsignedBigInteger('id_user');
-//     $table->unsignedBigInteger('id_ranking');
-//     $table->integer('experience')->default(0);
-
-//     $table->foreign('id_badge')->references('id')->on('badges');
-//     $table->foreign('id_ranking')->references('id')->on('ranking')->onDelete('cascade');
-//     $table->foreign('id_user')->references('id')->on('user')->onDelete('cascade');
-//     $table->unique(['id_badge','id_ranking', 'id_user']); // Restricción de clave única mixta
-// });

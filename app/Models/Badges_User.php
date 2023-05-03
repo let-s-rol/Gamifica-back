@@ -52,8 +52,7 @@ class Badges_User extends Model
             $max_points = $points_per_level[$level];
         }
 
-        $id_badge = $id_badge + $level;
-
+        $id_badge = $id_badge + $level - 1;
 
         return $id_badge;
     }

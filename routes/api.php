@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\Ranking_UserController;
 use App\Http\Controllers\Task_userController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\Badges_UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,6 +60,9 @@ Route::group(['middleware' => ["auth:sanctum"]], function () {
     Route::get('tasks/download', [Task_userController::class, 'download']);
     Route::get('tasks', [Task_userController::class, 'showTaskByUser']); //id 
     Route::delete('tasks/delete', [Task_userController::class, 'delete']);
+
+    //BADGES
+    Route::post('insertSkillsPoints', [Badges_UserController::class, 'insertSkillsPoints']);
 });
 
 //GET http://127.0.0.1:8000/api/user postman, devuelve el usuario logeado actual
