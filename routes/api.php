@@ -62,7 +62,7 @@ Route::group(['middleware' => ["auth:sanctum"]], function () {
     Route::delete('tasks/delete', [Task_userController::class, 'delete']);
 
     //BADGES
-    Route::post('insertSkillsPoints', [Badges_UserController::class, 'insertSkillsPoints']);
+    Route::put('insertSkillsPoints', [Badges_UserController::class, 'insertSkillsPoints']);
 });
 
 //GET http://127.0.0.1:8000/api/user postman, devuelve el usuario logeado actual

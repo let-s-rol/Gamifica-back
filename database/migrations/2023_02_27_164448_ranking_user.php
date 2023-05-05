@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('user_name');
             $table->integer('points');
             $table->boolean('validar');
+            $table->integer('puntosSemanales')->default(0);
 
             $table->foreign('id_ranking')->references('id')->on('ranking')->onDelete('cascade');
             $table->foreign('id_user')->references('id')->on('user');

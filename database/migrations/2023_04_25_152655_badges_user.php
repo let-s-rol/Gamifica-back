@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_user');
             $table->unsignedBigInteger('id_ranking');
             $table->integer('experience')->default(0);
+            $table->timestamps();
 
             $table->foreign('id_badge')->references('id')->on('badges');
             $table->foreign('id_ranking')->references('id')->on('ranking')->onDelete('cascade');

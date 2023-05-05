@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Ranking_User;
 use App\Models\Ranking;
 use App\Models\User;
+use App\Http\Controllers\Badges_UserController;
 use Illuminate\Support\Facades\Log;
 
 
@@ -84,6 +85,8 @@ class Ranking_UserController extends Controller
 
         $ranking_student->validar = true;
         $ranking_student->update();
+        $badges_usercontroller = new Badges_UserController;
+        $badges_usercontroller->createBaseBadgesByUser($request->id_ranking, $request->id_user);
 
         return response()->json(['success' => true, 'message' => 'Alumno validado correctamente', 'ranking_student' => $ranking_student]);
     }

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->binary('img')->nullable();
             $table->string('code')->unique();
             
-            $table->foreign('owner')->references('nick')->on('user');
+            $table->foreign('owner')->references('nick')->on('user')->onDelete('cascade');
             $table->timestamps();
         });
     }

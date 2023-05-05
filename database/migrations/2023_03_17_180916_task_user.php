@@ -21,7 +21,7 @@ return new class extends Migration
             $table->decimal('note', 2, 2)->nullable();
             
             $table->foreign('id_task')->references('id')->on('task')->onDelete('cascade');
-            $table->foreign('id_user')->references('id')->on('user');
+            $table->foreign('id_user')->references('id')->on('user')->onDelete('cascade');
             $table->timestamps();
         });
     }

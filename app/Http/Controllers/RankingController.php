@@ -29,8 +29,6 @@ class RankingController extends Controller
             $ranking->owner = $user->nick;
             $ranking->code = Str::random(10);
 
-
-
             $ranking->save();
 
             return response()->json([

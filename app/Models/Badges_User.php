@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Badge;
 
 class Badges_User extends Model
 {
@@ -35,25 +36,21 @@ class Badges_User extends Model
         return $this->belongsTo(Ranking::class, 'id_ranking');
     }
 
-    public function getImageUrl(): string
+    function max_experience($badge_name, $experience)
     {
-        $level = $this->level > 0 ? $this->level : 1; // si el nivel es 0, la imagen es la de nivel 1
-        return "/assets/medals/{$this->name}{$level}.png";
-    }
-
-    function max_experience($id_badge, $experience)
-    {
+        
+        $badge = Badge::where('name', $badge_name)->first();
+        
         $points_per_level = [0, 1000, 2000, 4000, 7000, 10000];
-        $level = 0;
-        $max_points = $points_per_level[$level];
 
-        while ($experience >= $max_points && $level < 5) {
-            $level++;
-            $max_points = $points_per_level[$level];
+        $current_level = 0;
+        foreach ($points_per_level as $level => $points) {
+            if ($experience <= $points) {
+                break;
+            }
+            $current_level = $level;
         }
 
-        $id_badge = $id_badge + $level - 1;
-
-        return $id_badge;
+        return $badge->id + $current_level;
     }
 }
