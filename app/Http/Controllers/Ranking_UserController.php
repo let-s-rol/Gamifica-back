@@ -84,6 +84,7 @@ class Ranking_UserController extends Controller
         }
 
         $ranking_student->validar = true;
+        $ranking_student->puntosSemanales = 1000;
         $ranking_student->update();
         $badges_usercontroller = new Badges_UserController;
         $badges_usercontroller->createBaseBadgesByUser($request->id_ranking, $request->id_user);

@@ -51,6 +51,7 @@ class Badges_UserController extends Controller
 
     public function insertSkillsPoints(Request $request)
     {
+        $user = $request->user();
         $badges = $request->validate([
             'id_ranking' => 'required',
             'id_user' => 'required',
@@ -61,7 +62,13 @@ class Badges_UserController extends Controller
             'Pensamiento' => 'nullable' //badge inicial id 21
         ]);
 
-        $badges_user = Badges_User::where('id_user', $request->id_user)
+        if ($user->id == $request->id_user) {
+            return response()->json(
+                ['success' => false, 'message' => 'No puedes puntuarte a ti mismo']
+            );
+        }
+
+        $user = Ranking_User::where('id_user', $user->id)
             ->where('id_ranking', $request->input('id_ranking'))
             ->get();
 
@@ -72,6 +79,22 @@ class Badges_UserController extends Controller
             $badges['Emocional'] ?? 0,
             $badges['Pensamiento'] ?? 0
         ];
+
+        $sum_experience = array_sum($badges_experience);
+
+
+        if ($user->puntosSemanales < $sum_experience) {
+            return response()->json(
+                ['success' => false, 'message' => 'Los puntos que tratas de añadir exceden tu límite de puntos semanales: ' . $user->puntosSemanales]
+            );
+        } else {
+            $user->puntosSemanales -= $sum_experience;
+            $user->save();
+        }
+
+        $badges_user = Badges_User::where('id_user', $request->id_user)
+            ->where('id_ranking', $request->input('id_ranking'))
+            ->get();
 
         $indice = 0;
 

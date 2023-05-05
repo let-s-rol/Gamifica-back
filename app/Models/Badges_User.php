@@ -42,8 +42,8 @@ class Badges_User extends Model
         $badge = Badge::where('name', $badge_name)->first();
         
         $points_per_level = [0, 1000, 2000, 4000, 7000, 10000];
-
         $current_level = 0;
+
         foreach ($points_per_level as $level => $points) {
             if ($experience <= $points) {
                 break;

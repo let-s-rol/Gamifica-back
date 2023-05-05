@@ -15,7 +15,8 @@ class Ranking_User extends Model
         'id_ranking',
         'user_name',
         'points',
-        'validar'
+        'validar',
+        'puntosSemanales'
     ];
 
     public $incrementing = false;
