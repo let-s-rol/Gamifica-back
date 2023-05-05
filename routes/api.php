@@ -23,8 +23,6 @@ use App\Http\Controllers\Badges_UserController;
 Route::post('register', [UserController::class, 'register']);
 Route::post('login', [UserController::class, 'login']);
 
-
-
 Route::group(['middleware' => ["auth:sanctum"]], function () {
 
     Route::post('update_profile_picture', [UserController::class, 'updateProfilePicture']);
@@ -63,6 +61,8 @@ Route::group(['middleware' => ["auth:sanctum"]], function () {
 
     //BADGES
     Route::put('insertSkillsPoints', [Badges_UserController::class, 'insertSkillsPoints']);
+    Route::get('showSkills', [Badges_UserController::class, 'showSkillsByUsers']);
+    
 });
 
 //GET http://127.0.0.1:8000/api/user postman, devuelve el usuario logeado actual

@@ -16,4 +16,9 @@ class Badge extends Model
         'max_points',
         'img_url'
     ];
+
+    public function rankingUsers()
+{
+    return $this->belongsToMany(Ranking_User::class);
+}
 }

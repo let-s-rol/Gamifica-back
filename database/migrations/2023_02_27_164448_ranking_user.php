@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('points');
             $table->boolean('validar');
             $table->integer('puntosSemanales')->default(0);
-
+            
             $table->foreign('id_ranking')->references('id')->on('ranking')->onDelete('cascade');
             $table->foreign('id_user')->references('id')->on('user');
             $table->unique(['id_ranking', 'id_user']); // Restricción de clave única mixta
