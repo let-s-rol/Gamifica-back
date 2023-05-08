@@ -8,6 +8,7 @@ use App\Http\Controllers\Ranking_UserController;
 use App\Http\Controllers\Task_userController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\Badges_UserController;
+use App\Http\Controllers\HistorialController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,7 +35,7 @@ Route::group(['middleware' => ["auth:sanctum"]], function () {
     Route::get('show_rankings', [RankingController::class, 'show_rankings']);
     Route::post('regenerate_code', [RankingController::class, 'regenerateCode']); //
     Route::get('show_rankings_students', [RankingController::class, 'show_rankings_students']);
-    
+
 
     //RANKING_USER
     Route::post('access_ranking', [Ranking_UserController::class, 'insert']);
@@ -62,7 +63,9 @@ Route::group(['middleware' => ["auth:sanctum"]], function () {
     //BADGES
     Route::put('insertSkillsPoints', [Badges_UserController::class, 'insertSkillsPoints']);
     Route::get('showSkills', [Badges_UserController::class, 'showSkillsByUsers']);
-    
+
+    //HISTORIAL
+    Route::get('showHistorial', [HistorialController::class, 'showHistorial']);
 });
 
 //GET http://127.0.0.1:8000/api/user postman, devuelve el usuario logeado actual

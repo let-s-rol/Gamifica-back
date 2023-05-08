@@ -23,7 +23,6 @@ class Historial extends Model
         'Iniciativa',
         'Emocional',
         'Pensamiento',
-
     ];
 
 
