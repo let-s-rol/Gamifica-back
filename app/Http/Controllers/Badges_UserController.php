@@ -140,6 +140,7 @@ class Badges_UserController extends Controller
         ]);
 
         $badges_user = Badges_User::where('id_ranking', $request->input('id_ranking'))
+        ->with('badge')
             ->get();
         return response()->json(['success' => true, 'data' => $badges_user]);
     }
