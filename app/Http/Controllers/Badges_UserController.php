@@ -83,7 +83,6 @@ class Badges_UserController extends Controller
         ];
 
         $sum_experience = array_sum($badges_experience);
-
         
         if ($user->puntosSemanales < $sum_experience) {
             return response()->json(
