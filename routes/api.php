@@ -65,7 +65,7 @@ Route::group(['middleware' => ["auth:sanctum"]], function () {
     Route::get('showSkills', [Badges_UserController::class, 'showSkillsByUsers']);
 
     //HISTORIAL
-    Route::get('showHistorial', [HistorialController::class, 'showHistorial']);
+    Route::get('showHistorial/{id_ranking}', [HistorialController::class, 'showHistorial']);
 });
 
 //GET http://127.0.0.1:8000/api/user postman, devuelve el usuario logeado actual
