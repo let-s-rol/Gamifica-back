@@ -68,11 +68,11 @@ class Badges_UserController extends Controller
                 ['success' => false, 'message' => 'No puedes puntuarte a ti mismo']
             );
         }
-        
+
         $user = Ranking_User::where('id_user', $user->id)
             ->where('id_ranking', $request->id_ranking)
             ->first();
-        
+
         $badges_experience = [
             $badges['Responsabilidad'] ?? 0,
             $badges['Cooperacion'] ?? 0,
@@ -82,9 +82,11 @@ class Badges_UserController extends Controller
         ];
 
         $sum_experience = array_sum($badges_experience);
-        
-        if ($sum_experience==0){
-            return null;
+
+        if ($sum_experience == 0) {
+            return response()->json(
+                ['success' => false, 'message' => 'No has añadido puntos que enviar en el usuario: ' . $request->id_user]
+            );
         }
 
         if ($user->puntosSemanales < $sum_experience) {
@@ -115,10 +117,10 @@ class Badges_UserController extends Controller
         $historial->Iniciativa = $badges_experience[2];
         $historial->Emocional = $badges_experience[3];
         $historial->Pensamiento = $badges_experience[4];
-       
+
         // guardar el historial
         $historial->save();
-        
+
         foreach ($badges_user as $badge) { //creación de objeto de las medallas del usuario y usado en el foreach
 
             $badge_obj = Badge::find($badge->id_badge)->first();
@@ -145,7 +147,7 @@ class Badges_UserController extends Controller
         ]);
 
         $badges_user = Badges_User::where('id_ranking', $request->input('id_ranking'))
-        ->with('badge')
+            ->with('badge')
             ->get();
         return response()->json(['success' => true, 'data' => $badges_user]);
     }
