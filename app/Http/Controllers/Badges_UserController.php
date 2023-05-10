@@ -128,6 +128,9 @@ class Badges_UserController extends Controller
             }
             $indice++;
         }
+        return response()->json(
+            ['success' => true, 'message' => 'Pueh ah funcionao` al pareceh']
+        );
     }
 
 
