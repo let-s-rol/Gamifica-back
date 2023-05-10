@@ -83,6 +83,10 @@ class Badges_UserController extends Controller
 
         $sum_experience = array_sum($badges_experience);
         
+        if ($sum_experience==0){
+            return null;
+        }
+
         if ($user->puntosSemanales < $sum_experience) {
             return response()->json(
                 ['success' => false, 'message' => 'Los puntos que tratas de añadir exceden tu límite de puntos semanales: ' . $user->puntosSemanales]
