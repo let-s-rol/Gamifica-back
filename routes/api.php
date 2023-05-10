@@ -24,7 +24,7 @@ use App\Http\Controllers\HistorialController;
 Route::post('register', [UserController::class, 'register']);
 Route::post('login', [UserController::class, 'login']);
 
-Route::group(['middleware' => ["auth:api"]], function () {
+Route::group(['middleware' => ["auth:sanctum"]], function () {
 
     Route::post('update_profile_picture', [UserController::class, 'updateProfilePicture']);
     Route::delete('logout', [UserController::class, 'logout']);
@@ -69,6 +69,6 @@ Route::group(['middleware' => ["auth:api"]], function () {
 });
 
 //GET http://127.0.0.1:8000/api/user postman, devuelve el usuario logeado actual
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });

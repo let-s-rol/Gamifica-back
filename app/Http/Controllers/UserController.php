@@ -9,6 +9,14 @@ use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
+
+    private $jwtSecret;
+
+    public function __construct()
+    {
+        $this->jwtSecret = env('JWT_SECRET');
+    }
+
     public function register(Request $request)
     {
         $request->validate([
