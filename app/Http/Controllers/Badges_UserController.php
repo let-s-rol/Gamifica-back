@@ -69,11 +69,10 @@ class Badges_UserController extends Controller
             );
         }
         
-        $user = Ranking_User::where('id_user', $request->id_user)
+        $user = Ranking_User::where('id_user', $user->id)
             ->where('id_ranking', $request->id_ranking)
             ->first();
         
-
         $badges_experience = [
             $badges['Responsabilidad'] ?? 0,
             $badges['Cooperacion'] ?? 0,
