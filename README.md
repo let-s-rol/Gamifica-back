@@ -1,66 +1,104 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# Guía de Instalación del Proyecto Angular + Laravel
 
-## About Laravel
+Esta guía te proporcionará los pasos necesarios para instalar y configurar un proyecto que utiliza Angular como frontend y Laravel como backend. Asegúrate de cumplir con los requisitos previos antes de comenzar.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Requisitos Previos
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Node.js y npm instalados en tu sistema.
+- Composer instalado en tu sistema.
+- Servidor web compatible con Laravel (por ejemplo, Apache o Nginx).
+- Base de datos compatible con Laravel (por ejemplo, MySQL, PostgreSQL).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Pasos de Instalación
 
-## Learning Laravel
+1. Clona el repositorio del proyecto desde GitHub:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+```bash
+git clone https://github.com/let-s-rol/Gamifica-front
+```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+2. Accede al directorio del proyecto:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```bash
+cd <DIRECTORIO_DEL_PROYECTO>
+```
 
-## Laravel Sponsors
+3. Instala las dependencias de Angular:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+```bash
+cd frontend
+npm install
+```
 
-### Premium Partners
+4. Configura el archivo de variables de entorno de Angular:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+```bash
+cp .env.example .env
+```
+   - Edita el archivo `.env` y establece las variables de entorno necesarias (por ejemplo, URL del backend, credenciales de la base de datos).
 
-## Contributing
+5. Compila y construye la aplicación de Angular:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+ng build --prod
+```
+   - Los archivos generados se guardarán en la carpeta `dist/` dentro del directorio `frontend/`.
 
-## Code of Conduct
+6. Regresa al directorio principal del proyecto:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+cd ..
+```
 
-## Security Vulnerabilities
+7. Instala las dependencias de Laravel:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+composer install
+```
 
-## License
+8. Configura el archivo de variables de entorno de Laravel:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+cp .env.example .env
+```
+   - Edita el archivo `.env` y establece las variables de entorno necesarias (por ejemplo, conexión de la base de datos, configuración del correo electrónico).
+
+9. Ejecuta las migraciones de la base de datos:
+
+```bash
+php artisan migrate
+```
+
+10. Ejecuta los seeders de la base de datos:
+
+```bash
+php artisan db:seed --class=card_khSeeder
+php artisan db:seed --class:gameSeeder
+```
+
+11. Configura el servidor web para que apunte al directorio `public/` dentro del proyecto.
+
+12. ¡Listo! Ahora puedes acceder a tu proyecto Angular + Laravel a través de la URL configurada en tu servidor web.
+
+
+# Cronología del Proyecto de Gamificación
+
+### Nivel 1: Creación de Funciones Básicas
+En este nivel, nos enfocamos en la creación de las funciones básicas necesarias para el sitio web, tales como el inicio de sesión, registro, asignación de roles y cierre de sesión.
+
+### Nivel 2: Desarrollo de la Interfaz de Usuario
+En el segundo nivel, nos centramos en desarrollar la interfaz, poniendo especial énfasis en la experiencia del usuario con rol de alumno.
+
+### Nivel 3: Mejoras en la Interfaz y Roles
+En el tercer nivel, realizamos ajustes adicionales en la interfaz y nos enfocamos en mejorar la experiencia de los usuarios con el rol de profesor.
+
+### Nivel 4: Ampliación de Funcionalidades para el Ranking
+En este nivel, llevamos a cabo un trabajo exhaustivo para agregar numerosas funcionalidades a la aplicación, específicamente enfocadas en el ranking.
+
+### Nivel 5: Mejora de la Seguridad y SEO
+En el quinto nivel, nos dedicamos a fortalecer la seguridad en el backend y optimizar el SEO en el frontend.
+
+### Nivel 6: Documentación del Proyecto
+Finalmente, en el sexto y último nivel, nos encargamos de realizar la documentación completa del proyecto.
+
