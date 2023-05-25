@@ -138,4 +138,30 @@ class UserController extends Controller
             ], 400);
         }
     }
+
+    public function editUser(Request $request)
+    {
+        $oldUser = $request->user();
+    
+        $request->validate([
+            'name' => 'required',
+            'lastname' => 'required',
+            'email' => 'required|email|unique:User,email,'.$oldUser->id,
+            'password' => 'required',
+        ]);
+    
+        $user = User::find($oldUser->id);
+    
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->name = $request->name;
+        $user->lastname = $request->lastname;
+        $user->save();
+    
+        return response()->json([
+            'status' => 1,
+            'msg' => 'Usuario actualizado exitosamente'
+        ]);
+    }
+    
 }

@@ -27,6 +27,7 @@ Route::post('login', [UserController::class, 'login']);
 Route::group(['middleware' => ["auth:sanctum"]], function () {
 
     Route::post('update_profile_picture', [UserController::class, 'updateProfilePicture']);
+    Route::post('editUser', [UserController::class, 'editUser']);
     Route::delete('logout', [UserController::class, 'logout']);
 
     //RANKING
