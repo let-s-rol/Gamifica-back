@@ -91,7 +91,7 @@ class RankingController extends Controller
         $user = $request->user();
         $ranking = Ranking::find($request->id);
 
-        if (isset($ranking->owner) === $user->nick) {
+        if (isset($ranking->owner) == $user->nick) {
 
             $new_code = Str::random(10);
             $ranking->code = $new_code;
@@ -105,7 +105,7 @@ class RankingController extends Controller
         }
         return response()->json([
             "status" => 0,
-            "msg" => "No tiene permisos para realizar esta acción",
+            "msg" => "No tiene permisos para realizar esta acción", $ranking->owner, $user->nick
         ]);
     }
 }
