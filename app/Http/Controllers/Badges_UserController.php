@@ -144,11 +144,13 @@ class Badges_UserController extends Controller
     {
         $request->validate([
             'id_ranking' => 'required',
+            'id_user' => 'required'
         ]);
 
         $badges_user = Badges_User::where('id_ranking', $request->input('id_ranking'))
-            ->with('badge')
-            ->get();
+        ->where('id_user', $request->input('id_user')) 
+        ->with('badge')
+        ->get();
         return response()->json(['success' => true, 'data' => $badges_user]);
     }
 }
