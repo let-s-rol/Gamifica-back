@@ -26,6 +26,9 @@ Route::post('login', [UserController::class, 'login']);
 
 Route::group(['middleware' => ["auth:sanctum"]], function () {
 
+    
+
+    Route::middleware('auth:sanctum')->get('/user', [UserController::class, 'userprofile']);
     Route::post('update_profile_picture', [UserController::class, 'updateProfilePicture']);
     Route::post('editUser', [UserController::class, 'editUser']);
     Route::delete('logout', [UserController::class, 'logout']);
@@ -70,6 +73,6 @@ Route::group(['middleware' => ["auth:sanctum"]], function () {
 });
 
 //GET http://127.0.0.1:8000/api/user postman, devuelve el usuario logeado actual
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });

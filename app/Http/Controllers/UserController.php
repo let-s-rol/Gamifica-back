@@ -39,14 +39,7 @@ class UserController extends Controller
         $user->school = $request->school;
         $user->date = $request->date;
 
-         if ($request->hasFile('img')) {
-             $imagePath = $request->file('img')->getRealPath();
-             $image = file_get_contents($imagePath);
-             $user->img = base64_encode($image);
-         } else {
-            $defaultImage = file_get_contents(public_path('images/default.png'));
-             $user->img = base64_encode($defaultImage);
-         }
+   
 
         if (isset($user->school)) {
             $user->rol = "teacher";
@@ -107,12 +100,17 @@ class UserController extends Controller
         ]);
     }
 
-    /*ESTA ES LA FUNCIÓN GENERAL PARA PILLAR EL JSON DE USUARIO */
     public function userprofile(Request $request)
     {
         $user = $request->user();
+    
+        // Include the image field in the user data
+        $user->img = base64_encode($user->img);
+    
         return response()->json($user);
     }
+
+
     public function updateProfilePicture(Request $request)
     {
         $request->validate([
